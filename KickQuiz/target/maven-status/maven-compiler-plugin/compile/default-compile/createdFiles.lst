@@ -1,0 +1,4 @@
+br\univates\paa\kickquiz\FXMLController.class
+br\univates\paa\kickquiz\MainApp.class
+br\univates\paa\kickquiz\DAO\HibernateUtil.class
+br\univates\paa\kickquiz\model\Usuario.class
