@@ -52,6 +52,21 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        
+        Query query = session.createQuery("from Usuario");
+        List<Usuario> list = query.list();
+
+        String users = "";
+        Iterator<Usuario> itr = list.iterator();
+        while (itr.hasNext()) {
+            Usuario q = itr.next();
+            
+            users += "\n" + q.getNome();
+        }
+        session.close();
     }
 }
