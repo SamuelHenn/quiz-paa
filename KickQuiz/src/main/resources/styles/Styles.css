@@ -1,3 +1,7 @@
 .button {
     -fx-font-weight: bold;
 }
+
+.text-large {
+    -fx-font-size: 30em;
+}
