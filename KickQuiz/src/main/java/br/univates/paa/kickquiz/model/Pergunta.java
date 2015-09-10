@@ -5,11 +5,14 @@
  */
 package br.univates.paa.kickquiz.model;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,6 +29,8 @@ public class Pergunta implements java.io.Serializable {
     private int id;
     private String descricao;
     private String dificuldade;
+    @OneToMany(mappedBy = "pergunta", fetch = FetchType.EAGER)
+    private List<Resposta> respostas;
 
     public int getId() {
         return id;
@@ -50,4 +55,13 @@ public class Pergunta implements java.io.Serializable {
     public void setDificuldade(String dificuldade) {
         this.dificuldade = dificuldade;
     }
+
+    public List<Resposta> getRespostas() {
+        return respostas;
+    }
+
+    public void setRespostas(List<Resposta> respostas) {
+        this.respostas = respostas;
+    }
+
 }

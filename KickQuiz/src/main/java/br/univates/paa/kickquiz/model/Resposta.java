@@ -10,7 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -27,7 +28,8 @@ public class Resposta implements java.io.Serializable {
     private int id;
     private String descricao;
     private boolean fl_correta;
-    @OneToOne(mappedBy = "id_pergunta")
+    @ManyToOne
+    @JoinColumn(name = "id_pergunta")
     private Pergunta pergunta;
 
     public int getId() {
@@ -61,4 +63,5 @@ public class Resposta implements java.io.Serializable {
     public void setPergunta(Pergunta pergunta) {
         this.pergunta = pergunta;
     }
+
 }

@@ -1,42 +1,34 @@
 package br.univates.paa.kickquiz;
 
+import br.univates.paa.kickquiz.DAO.PerguntaDAO;
+import br.univates.paa.kickquiz.model.Pergunta;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 
 public class PerguntaController implements Initializable {
 
     @FXML
-    private void btnStart(ActionEvent event) {
-
-        /*SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        Usuario user = new Usuario();
-        user.setNome(nome.getText());
-        session.save(user);
-
-        session.getTransaction().commit();
-
-        Query query = session.createQuery("from Usuario");
-        List<Usuario> list = query.list();
-
-        String users = "";
-        Iterator<Usuario> itr = list.iterator();
-        while (itr.hasNext()) {
-            Usuario q = itr.next();
-            
-            users += "\n" + q.getNome();
-        }
-        session.close();
-
-        label.setText("Hello World!" + users);*/
-    }
+    private Label tvPergunta;
+    @FXML
+    private RadioButton rb1, rb2, rb3, rb4, rb5;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            PerguntaDAO pdao = new PerguntaDAO();
+            Pergunta p = pdao.getById(1);
+            tvPergunta.setText(p.getDescricao());
+            rb1.setText(p.getRespostas().get(0).getDescricao());
+            rb2.setText(p.getRespostas().get(1).getDescricao());
+            rb3.setText(p.getRespostas().get(2).getDescricao());
+            rb4.setText(p.getRespostas().get(3).getDescricao());
+            rb5.setText(p.getRespostas().get(4).getDescricao());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
