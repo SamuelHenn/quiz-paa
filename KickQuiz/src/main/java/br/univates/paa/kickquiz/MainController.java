@@ -31,6 +31,22 @@ public class MainController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+    
+    @FXML
+    private void btnCadastroPergunta(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/cadastro_pergunta.fxml"));
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("/styles/Styles.css");
+
+            Stage stage = (Stage) btnStart.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

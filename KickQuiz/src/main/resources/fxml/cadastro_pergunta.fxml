@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.univates.paa.kickquiz.CadastroPerguntaController">
+    <children>
+        <AnchorPane prefHeight="402.0" prefWidth="800.0">
+            <children>
+                <Label layoutX="14.0" layoutY="14.0" text="Cadastro Pergunta">
+                    <font>
+                        <javafx.scene.text.Font size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="35.0" layoutY="60.0" text="Pergunta">
+                    <font>
+                        <javafx.scene.text.Font size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="35.0" layoutY="145.0" text="Dificuldade">
+                    <font>
+                        <javafx.scene.text.Font size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="35.0" layoutY="193.0" text="Alternativa">
+                    <font>
+                        <javafx.scene.text.Font size="14.0" />
+                    </font>
+                </Label>
+                <TextArea layoutX="140.0" layoutY="60.0" prefHeight="50.0" prefWidth="330.0" fx:id="taPergunta" />
+                <ComboBox layoutX="140.0" layoutY="140.0" prefHeight="25.0" prefWidth="330.0" fx:id="cbBox" />
+                <TextField layoutX="140.0" layoutY="190.0" prefHeight="25.0" prefWidth="330.0" fx:id="tvResposta" />
+                <CheckBox layoutX="330.0" layoutY="229.0" mnemonicParsing="false" text="Correta" fx:id="cbCorreto" />
+                <Button layoutX="400.0" layoutY="225.0" mnemonicParsing="false" onAction="#addResposta" text="Adicionar" />
+                <Button layoutX="705.0" layoutY="344.0" mnemonicParsing="false" text="Salvar">
+                    <font>
+                        <javafx.scene.text.Font size="20.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnVoltar" layoutX="610.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnVoltar" text="Voltar">
+                    <font>
+                        <javafx.scene.text.Font size="20.0" />
+                    </font>
+                </Button>
+                <ListView layoutX="140.0" layoutY="260.0" prefHeight="120.0" prefWidth="330.0" fx:id="listRespostas" />
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

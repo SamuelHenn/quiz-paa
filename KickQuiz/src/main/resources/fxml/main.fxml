@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -10,16 +11,21 @@
    <children>
       <AnchorPane prefHeight="350.0" prefWidth="600.0">
          <children>
-            <Button layoutX="210.0" layoutY="140.0" onAction="#btnStart" fx:id="btnStart" mnemonicParsing="false" prefHeight="70.0" prefWidth="180.0" text="Começar a Jogar">
+            <Button fx:id="btnStart" layoutX="300.0" layoutY="140.0" mnemonicParsing="false" onAction="#btnStart" prefHeight="70.0" prefWidth="204.0" text="Começar a Jogar">
                <font>
                   <javafx.scene.text.Font size="20.0" />
                </font>
             </Button>
-            <Label layoutX="147.0" layoutY="65.0" text="Seja bem vindo ao KickQuiz">
+            <Label layoutX="250.0" layoutY="65.0" text="Seja bem vindo ao KickQuiz">
                <font>
                   <javafx.scene.text.Font size="25.0" />
                </font>
             </Label>
+            <Button fx:id="btnCadastroPergunta" layoutX="300.0" layoutY="229.0" mnemonicParsing="false" onAction="#btnCadastroPergunta" prefHeight="70.0" prefWidth="204.0" text="Cadastro Pergunta">
+               <font>
+                  <javafx.scene.text.Font size="20.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>

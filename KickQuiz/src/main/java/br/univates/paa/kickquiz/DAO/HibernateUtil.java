@@ -9,7 +9,6 @@ package br.univates.paa.kickquiz.DAO;
  *
  * @author Avell G1310 MAX
  */
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
