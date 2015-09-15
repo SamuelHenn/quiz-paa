@@ -28,7 +28,7 @@ public class Pergunta implements java.io.Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
     private String descricao;
-    private String dificuldade;
+    private int dificuldade;
     @OneToMany(mappedBy = "pergunta", fetch = FetchType.EAGER)
     private List<Resposta> respostas;
 
@@ -48,11 +48,11 @@ public class Pergunta implements java.io.Serializable {
         this.descricao = descricao;
     }
 
-    public String getDificuldade() {
+    public int getDificuldade() {
         return dificuldade;
     }
 
-    public void setDificuldade(String dificuldade) {
+    public void setDificuldade(int dificuldade) {
         this.dificuldade = dificuldade;
     }
 

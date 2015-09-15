@@ -64,4 +64,13 @@ public class Resposta implements java.io.Serializable {
         this.pergunta = pergunta;
     }
 
+    @Override
+    public String toString() {
+        if (this.fl_correta) {
+            return this.descricao + " - Correto";
+        } else {
+            return this.descricao;
+        }
+    }
+
 }

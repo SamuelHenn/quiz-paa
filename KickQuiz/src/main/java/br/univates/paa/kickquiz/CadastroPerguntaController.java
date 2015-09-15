@@ -1,6 +1,11 @@
 package br.univates.paa.kickquiz;
 
+import br.univates.paa.kickquiz.DAO.PerguntaDAO;
+import br.univates.paa.kickquiz.model.Pergunta;
+import br.univates.paa.kickquiz.model.Resposta;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,7 +39,7 @@ public class CadastroPerguntaController implements Initializable {
     private TextField tvResposta;
 
     @FXML
-    private TextArea tvPergunta;
+    private TextArea taPergunta;
 
     @FXML
     private void btnVoltar(ActionEvent event) {
@@ -53,23 +58,59 @@ public class CadastroPerguntaController implements Initializable {
     }
 
     @FXML
+    private void removeResposta(ActionEvent event) {
+        try {
+            int index = listRespostas.getSelectionModel().getSelectedIndex();
+            if (index >= 0) {
+                listRespostas.getItems().remove(index);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
     private void addResposta(ActionEvent event) {
         try {
-            String resposta = tvResposta.getText();
+            if (listRespostas.getItems().size() == 5) {
+                return;
+            }
+
+            Resposta resposta = new Resposta();
+            resposta.setDescricao(tvResposta.getText());
             if (cbCorreto.isSelected()) {
                 for (int i = 0; i < listRespostas.getItems().size(); i++) {
-                    String item = listRespostas.getItems().get(i).toString();
-                    if (item.contains(" - Correta")) {
+                    Resposta r = (Resposta) listRespostas.getItems().get(i);
+                    if (r.isFl_correta()) {
                         return;
                     }
                 }
 
-                resposta += " - Correta";
+                resposta.setFl_correta(true);
             }
 
             listRespostas.getItems().add(resposta);
             tvResposta.setText("");
             cbCorreto.setSelected(false);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    private void save(ActionEvent event) {
+        try {
+            Pergunta p = new Pergunta();
+            p.setDescricao(taPergunta.getText());
+            p.setDificuldade(cbBox.getSelectionModel().getSelectedIndex());
+            List<Resposta> respostas = new ArrayList<>();
+            for (int i = 0; i < listRespostas.getItems().size(); i++) {
+                respostas.add((Resposta) listRespostas.getItems().get(i));
+            }
+            p.setRespostas(respostas);
+            PerguntaDAO pdao = new PerguntaDAO();
+            pdao.save(p);
+            btnVoltar(null);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

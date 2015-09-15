@@ -5,10 +5,8 @@
  */
 package br.univates.paa.kickquiz.DAO;
 
-import br.univates.paa.kickquiz.model.Usuario;
 import java.util.List;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 /**
  *
@@ -16,32 +14,35 @@ import org.hibernate.SessionFactory;
  */
 public abstract class ModelDAO<T> {
 
-    private SessionFactory session = HibernateUtil.getSessionFactory();
+    private Session session = HibernateUtil.getSession();
 
     public void save(T t) {
-        Session session = this.session.getCurrentSession();
+        session.beginTransaction();
         session.persist(t);
+        session.getTransaction().commit();
     }
 
     public void delete(T t) {
-        Session session = this.session.getCurrentSession();
+        session.beginTransaction();
         if (null != t) {
             session.delete(t);
         }
+        session.getTransaction().commit();
     }
 
-    /*public List<T> listAll() {
-        Session session = this.session.getCurrentSession();
-        List<T> personsList = session.createQuery("from " + <T>.class.getName()).list();
-                
-                (Class<T>)
-                
+    public List<T> listAll() {
+        session.beginTransaction();
+        List<T> personsList = session.createQuery("from " + getObject().getName()).list();
+        session.getTransaction().commit();
         return personsList;
     }
 
     public T getById(int id) {
-        Session session = this.session.getCurrentSession();
-        T u = (T) session.load(Class<T>, new Integer(id));
-        return u;
-    }*/
+        session.beginTransaction();
+        T t = (T) session.get(getObject(), new Integer(id));
+        session.getTransaction().commit();
+        return t;
+    }
+
+    public abstract Class getObject();
 }

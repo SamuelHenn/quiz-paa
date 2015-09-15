@@ -31,12 +31,13 @@
                         <javafx.scene.text.Font size="14.0" />
                     </font>
                 </Label>
-                <TextArea layoutX="140.0" layoutY="60.0" prefHeight="50.0" prefWidth="330.0" fx:id="taPergunta" />
-                <ComboBox layoutX="140.0" layoutY="140.0" prefHeight="25.0" prefWidth="330.0" fx:id="cbBox" />
-                <TextField layoutX="140.0" layoutY="190.0" prefHeight="25.0" prefWidth="330.0" fx:id="tvResposta" />
-                <CheckBox layoutX="330.0" layoutY="229.0" mnemonicParsing="false" text="Correta" fx:id="cbCorreto" />
-                <Button layoutX="400.0" layoutY="225.0" mnemonicParsing="false" onAction="#addResposta" text="Adicionar" />
-                <Button layoutX="705.0" layoutY="344.0" mnemonicParsing="false" text="Salvar">
+                <TextArea fx:id="taPergunta" layoutX="140.0" layoutY="60.0" prefHeight="50.0" prefWidth="330.0" />
+                <ComboBox fx:id="cbBox" layoutX="140.0" layoutY="140.0" prefHeight="25.0" prefWidth="330.0" />
+                <TextField fx:id="tvResposta" layoutX="140.0" layoutY="190.0" prefHeight="25.0" prefWidth="330.0" />
+                <CheckBox fx:id="cbCorreto" layoutX="257.0" layoutY="229.0" mnemonicParsing="false" text="Correta" />
+                <Button layoutX="328.0" layoutY="225.0" mnemonicParsing="false" onAction="#addResposta" text="Adicionar" />
+                <Button layoutX="406.0" layoutY="225.0" mnemonicParsing="false" onAction="#removeResposta" text="Remover" />
+                <Button layoutX="705.0" layoutY="344.0" mnemonicParsing="false" onAction="#save" text="Salvar">
                     <font>
                         <javafx.scene.text.Font size="20.0" />
                     </font>
@@ -46,7 +47,7 @@
                         <javafx.scene.text.Font size="20.0" />
                     </font>
                 </Button>
-                <ListView layoutX="140.0" layoutY="260.0" prefHeight="120.0" prefWidth="330.0" fx:id="listRespostas" />
+                <ListView fx:id="listRespostas" layoutX="140.0" layoutY="260.0" prefHeight="120.0" prefWidth="330.0" />
             </children>
         </AnchorPane>
     </children>
