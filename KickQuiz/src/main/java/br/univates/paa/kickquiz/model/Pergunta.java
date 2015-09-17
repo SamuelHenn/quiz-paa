@@ -5,7 +5,9 @@
  */
 package br.univates.paa.kickquiz.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +31,7 @@ public class Pergunta implements java.io.Serializable {
     private int id;
     private String descricao;
     private int dificuldade;
-    @OneToMany(mappedBy = "pergunta", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pergunta", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Resposta> respostas;
 
     public int getId() {
@@ -62,6 +64,13 @@ public class Pergunta implements java.io.Serializable {
 
     public void setRespostas(List<Resposta> respostas) {
         this.respostas = respostas;
+    }
+
+    public void addResposta(Resposta r) {
+        if (this.respostas == null)
+            this.respostas = new ArrayList<Resposta>();
+        r.setPergunta(this);
+        this.respostas.add(r);
     }
 
 }

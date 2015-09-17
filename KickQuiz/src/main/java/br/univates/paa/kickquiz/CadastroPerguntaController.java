@@ -103,11 +103,9 @@ public class CadastroPerguntaController implements Initializable {
             Pergunta p = new Pergunta();
             p.setDescricao(taPergunta.getText());
             p.setDificuldade(cbBox.getSelectionModel().getSelectedIndex());
-            List<Resposta> respostas = new ArrayList<>();
             for (int i = 0; i < listRespostas.getItems().size(); i++) {
-                respostas.add((Resposta) listRespostas.getItems().get(i));
+                p.addResposta((Resposta) listRespostas.getItems().get(i));
             }
-            p.setRespostas(respostas);
             PerguntaDAO pdao = new PerguntaDAO();
             pdao.save(p);
             btnVoltar(null);
