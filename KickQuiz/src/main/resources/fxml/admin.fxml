@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.univates.paa.kickquiz.AdminController">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="800.0">
+         <children>
+            <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="800.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="Cadastro">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#btnCadastroPergunta" text="Pergunta" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Ajuda">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Sobre" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <Button layoutX="750.0" layoutY="561.0" mnemonicParsing="false" onAction="#btnSair" text="Sair" />
+            <Label layoutX="14.0" layoutY="34.0" text="" fx:id="tvTitle" />
+            <TableView layoutX="14.0" layoutY="60.0" prefHeight="488.0" prefWidth="771.0" fx:id="tvData"  />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

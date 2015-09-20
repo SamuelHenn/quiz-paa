@@ -14,7 +14,7 @@ import org.hibernate.Session;
  */
 public abstract class ModelDAO<T> {
 
-    private Session session = HibernateUtil.getSession();
+    public Session session = HibernateUtil.getSession();
 
     public void save(T t) {
         session.beginTransaction();

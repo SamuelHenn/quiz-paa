@@ -7,39 +7,27 @@ package br.univates.paa.kickquiz.DAO;
 
 import br.univates.paa.kickquiz.model.Usuario;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.Query;
 
 /**
  *
  * @author Avell G1310 MAX
  */
-public class UsuarioDAO {
+public class UsuarioDAO extends ModelDAO<Usuario> {
 
-    private SessionFactory session = HibernateUtil.getSessionFactory();
-
-    public void save(Usuario u) {
-        Session session = this.session.getCurrentSession();
-        session.persist(u);
+    @Override
+    public Class getObject() {
+        return Usuario.class;
     }
-
-    public void delete(Usuario u) {
-        Session session = this.session.getCurrentSession();
-        if (null != u) {
-            session.delete(u);
-        }
+    
+    public boolean checkLogin(Usuario u)
+    {
+        session.beginTransaction();
+        Query query = session.createQuery("from Usuario where nome = :nome and senha = :senha");
+        query.setParameter("nome", u.getNome());
+        query.setParameter("senha", u.getSenha());
+        List list = query.list();
+        session.getTransaction().commit();
+        return list.size() == 1;
     }
-
-    public List<Usuario> listAll() {
-        Session session = this.session.getCurrentSession();
-        List<Usuario> personsList = session.createQuery("from " + Usuario.class.getName()).list();
-        return personsList;
-    }
-
-    public Usuario getById(int id) {
-        Session session = this.session.getCurrentSession();
-        Usuario u = (Usuario) session.load(Usuario.class, new Integer(id));
-        return u;
-    }
-
 }

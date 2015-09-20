@@ -44,7 +44,7 @@ public class CadastroPerguntaController implements Initializable {
     @FXML
     private void btnVoltar(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/admin.fxml"));
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add("/styles/Styles.css");
