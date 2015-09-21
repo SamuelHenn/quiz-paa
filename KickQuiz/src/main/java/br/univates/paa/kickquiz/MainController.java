@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -66,7 +68,13 @@ public class MainController implements Initializable {
             }
             else
             {
-                System.out.println("Nao tem");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Erro ao autenticar!");
+                alert.setHeaderText("Usuário ou senha não conferem");
+                alert.setContentText(null);
+
+                alert.showAndWait();
+                //System.out.println("Nao tem");
             }
             
         } catch (Exception e) {
