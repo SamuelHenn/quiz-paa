@@ -4,6 +4,7 @@ import br.univates.paa.kickquiz.DAO.RankingDAO;
 import br.univates.paa.kickquiz.DAO.UsuarioDAO;
 import br.univates.paa.kickquiz.model.Ranking;
 import br.univates.paa.kickquiz.model.Usuario;
+import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -67,8 +68,8 @@ public class MainController implements Initializable {
             UsuarioDAO udao = new UsuarioDAO();
 
             if (udao.checkLogin(u)) {
-                //Utils.abrirTela(getClass(), btnStart, "admin");
-                Stage stage = (Stage) btnStart.getScene().getWindow();
+                Utils.abrirTela(getClass(), btnStart, "admin");
+                /*Stage stage = (Stage) btnStart.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/admin.fxml"));
 
                 Parent root = (Parent) fxmlLoader.load();
@@ -78,15 +79,13 @@ public class MainController implements Initializable {
 
                 stage.setScene(scene);
 
-                stage.show();
+                stage.show();*/
             } else {
-                Alert alert = new Alert(AlertType.ERROR);
+                Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Erro ao autenticar!");
                 alert.setHeaderText("Usuário ou senha não conferem");
                 alert.setContentText(null);
-
-                alert.showAndWait();
-                System.out.println("Nao tem");
+                alert.show();
             }
 
         } catch (Exception e) {
@@ -99,16 +98,21 @@ public class MainController implements Initializable {
         try {
             RankingDAO rdao = new RankingDAO();
             List<Ranking> itens = rdao.listAll();
+            for (int i = 0; i < itens.size(); i++) {
+                itens.get(i).setPosicao((i + 1) + "°");
+            }
             ObservableList data = FXCollections.observableList(itens);
 
             tvRanking.setItems(data);
+            TableColumn pos = new TableColumn("Posição");
+            pos.setCellValueFactory(new PropertyValueFactory("posicao"));
             TableColumn desc = new TableColumn("Usuário");
             desc.setCellValueFactory(new PropertyValueFactory("usuario"));
             TableColumn pontos = new TableColumn("Pontos");
             pontos.setCellValueFactory(new PropertyValueFactory("pontos"));
             TableColumn certas = new TableColumn("Perguntas Certas");
             certas.setCellValueFactory(new PropertyValueFactory("perguntas_acertadas"));
-            tvRanking.getColumns().setAll(desc, pontos, certas);
+            tvRanking.getColumns().setAll(pos, desc, pontos, certas);
             tvRanking.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         } catch (Exception e) {
             System.out.println(e.getMessage());

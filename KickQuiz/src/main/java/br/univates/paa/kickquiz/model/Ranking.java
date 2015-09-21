@@ -8,6 +8,7 @@ package br.univates.paa.kickquiz.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -19,6 +20,8 @@ public class Ranking implements java.io.Serializable {
 
     @Id
     private int id_usuario;
+    @Transient
+    private String posicao;
     private String usuario;
     private String pontos;
     private String perguntas_acertadas;
@@ -37,6 +40,14 @@ public class Ranking implements java.io.Serializable {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public String getPosicao() {
+        return posicao;
+    }
+
+    public void setPosicao(String posicao) {
+        this.posicao = posicao;
     }
 
     public String getPontos() {

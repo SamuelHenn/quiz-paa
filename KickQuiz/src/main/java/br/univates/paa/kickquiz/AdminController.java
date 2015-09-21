@@ -23,10 +23,6 @@ public class AdminController implements Initializable {
 
     private Usuario user;
 
-    public AdminController(Usuario user) {
-        this.user = user;
-    }
-
     @FXML
     private MenuBar menuBar;
 
@@ -82,23 +78,23 @@ public class AdminController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             visibilidadeContent(false);
-            if (user != null) {
+            /*if (user != null) {
                 tvUser.setText("Olá " + user.getNome());
-            }
+            }*/
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     void initData(Usuario user) {
-        try {
+        /*try {
             this.user = user;
             if (user != null) {
                 tvUser.setText("Olá " + user.getNome());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
+        }*/
     }
 
     private void visibilidadeContent(boolean visible) {
