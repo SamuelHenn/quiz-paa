@@ -2,6 +2,7 @@ package br.univates.paa.kickquiz;
 
 import br.univates.paa.kickquiz.DAO.UsuarioDAO;
 import br.univates.paa.kickquiz.model.Usuario;
+import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -10,8 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -59,22 +60,17 @@ public class MainController implements Initializable {
             
             if (udao.checkLogin(u))
             {
-                Parent root = FXMLLoader.load(getClass().getResource("/fxml/admin.fxml"));
-                Scene scene = new Scene(root);
-                scene.getStylesheets().add("/styles/Styles.css");
-                Stage stage = (Stage) btnStart.getScene().getWindow();
-                stage.setScene(scene);
-                stage.show();
+                Utils.abrirTela(getClass(), btnStart, "admin");
             }
             else
             {
-                Alert alert = new Alert(AlertType.ERROR);
+                /*Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Erro ao autenticar!");
                 alert.setHeaderText("Usuário ou senha não conferem");
                 alert.setContentText(null);
 
-                alert.showAndWait();
-                //System.out.println("Nao tem");
+                alert.showAndWait();*/
+                System.out.println("Nao tem");
             }
             
         } catch (Exception e) {
