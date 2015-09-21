@@ -2,6 +2,7 @@ package br.univates.paa.kickquiz;
 
 import br.univates.paa.kickquiz.DAO.PerguntaDAO;
 import br.univates.paa.kickquiz.model.Pergunta;
+import br.univates.paa.kickquiz.model.Usuario;
 import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
 import java.util.List;
@@ -20,11 +21,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AdminController implements Initializable {
 
+    private Usuario user;
+
+    public AdminController(Usuario user) {
+        this.user = user;
+    }
+
     @FXML
     private MenuBar menuBar;
 
     @FXML
-    private Label tvTitle;
+    private Label tvTitle, tvUser;
 
     @FXML
     private TableView tvData;
@@ -75,6 +82,20 @@ public class AdminController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             visibilidadeContent(false);
+            if (user != null) {
+                tvUser.setText("Olá " + user.getNome());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    void initData(Usuario user) {
+        try {
+            this.user = user;
+            if (user != null) {
+                tvUser.setText("Olá " + user.getNome());
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -14,5 +14,6 @@
         <mapping class="br.univates.paa.kickquiz.model.Usuario" />
         <mapping class="br.univates.paa.kickquiz.model.Resposta" />
         <mapping class="br.univates.paa.kickquiz.model.Pergunta" />
+        <mapping class="br.univates.paa.kickquiz.model.Ranking" />
     </session-factory>
 </hibernate-configuration>

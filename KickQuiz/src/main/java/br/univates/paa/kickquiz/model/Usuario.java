@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.annotations.ColumnTransformer;
 
 /**
  *
@@ -25,6 +26,7 @@ public class Usuario implements java.io.Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
     private String nome;
+    @ColumnTransformer(write = "sha1(?)")
     private String senha;
 
     public int getId() {
