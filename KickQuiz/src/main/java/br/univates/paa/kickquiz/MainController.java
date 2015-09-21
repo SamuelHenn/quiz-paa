@@ -62,24 +62,22 @@ public class MainController implements Initializable {
         try {
 
             Usuario u = new Usuario();
-            u.setNome(tfNome.getText());
+            u.setLogin(tfNome.getText());
             u.setSenha(tfSenha.getText());
 
             UsuarioDAO udao = new UsuarioDAO();
+            u = udao.checkLogin(u);
 
-            if (udao.checkLogin(u)) {
-                Utils.abrirTela(getClass(), btnStart, "admin");
-                /*Stage stage = (Stage) btnStart.getScene().getWindow();
+            if (u != null) {
+                //Utils.abrirTela(getClass(), btnStart, "admin");
+                Stage stage = (Stage) btnStart.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/admin.fxml"));
-
                 Parent root = (Parent) fxmlLoader.load();
                 AdminController controller = fxmlLoader.<AdminController>getController();
-                controller.initData(u);
+                controller.setUser(u);
                 Scene scene = new Scene(root);
-
                 stage.setScene(scene);
-
-                stage.show();*/
+                stage.show();
             } else {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Erro ao autenticar!");

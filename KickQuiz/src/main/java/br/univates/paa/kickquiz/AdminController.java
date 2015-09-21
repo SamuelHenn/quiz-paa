@@ -78,23 +78,20 @@ public class AdminController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             visibilidadeContent(false);
-            /*if (user != null) {
-                tvUser.setText("Olá " + user.getNome());
-            }*/
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    void initData(Usuario user) {
-        /*try {
+    public void setUser(Usuario user) {
+        try {
             this.user = user;
             if (user != null) {
                 tvUser.setText("Olá " + user.getNome());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }*/
+        }
     }
 
     private void visibilidadeContent(boolean visible) {

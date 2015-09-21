@@ -19,15 +19,14 @@ public class UsuarioDAO extends ModelDAO<Usuario> {
     public Class getObject() {
         return Usuario.class;
     }
-    
-    public boolean checkLogin(Usuario u)
-    {
+
+    public Usuario checkLogin(Usuario u) {
         session.beginTransaction();
-        Query query = session.createQuery("from Usuario where nome = :nome and senha = :senha");
-        query.setParameter("nome", u.getNome());
+        Query query = session.createQuery("from Usuario where login = :login and senha = :senha");
+        query.setParameter("login", u.getLogin());
         query.setParameter("senha", u.getSenha());
         List list = query.list();
         session.getTransaction().commit();
-        return list.size() == 1;
+        return list.size() == 1 ? (Usuario) list.get(0) : null;
     }
 }

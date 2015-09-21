@@ -28,6 +28,7 @@ public class Usuario implements java.io.Serializable {
     private String nome;
     @ColumnTransformer(write = "sha1(?)")
     private String senha;
+    private String login;
 
     public int getId() {
         return id;
@@ -51,6 +52,14 @@ public class Usuario implements java.io.Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
 }

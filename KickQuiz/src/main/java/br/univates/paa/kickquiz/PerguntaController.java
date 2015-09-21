@@ -2,8 +2,10 @@ package br.univates.paa.kickquiz;
 
 import br.univates.paa.kickquiz.DAO.PerguntaDAO;
 import br.univates.paa.kickquiz.model.Pergunta;
+import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -27,6 +29,15 @@ public class PerguntaController implements Initializable {
             rb3.setText(p.getRespostas().get(2).getDescricao());
             rb4.setText(p.getRespostas().get(3).getDescricao());
             rb5.setText(p.getRespostas().get(4).getDescricao());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    private void btnSair(ActionEvent event) {
+        try {
+            Utils.abrirTela(getClass(), tvPergunta, "main");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
