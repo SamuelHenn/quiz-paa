@@ -21,6 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 //import javafx.scene.control.Alert;
 //import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -36,7 +37,7 @@ public class MainController implements Initializable {
     private TextField tfNome;
 
     @FXML
-    private TextField tfSenha;
+    private PasswordField tfSenha;
 
     @FXML
     private TableView tvRanking;
@@ -69,15 +70,8 @@ public class MainController implements Initializable {
             u = udao.checkLogin(u);
 
             if (u != null) {
-                //Utils.abrirTela(getClass(), btnStart, "admin");
-                Stage stage = (Stage) btnStart.getScene().getWindow();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/admin.fxml"));
-                Parent root = (Parent) fxmlLoader.load();
-                AdminController controller = fxmlLoader.<AdminController>getController();
-                controller.setUser(u);
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+                Utils.setUserLogado(u);
+                Utils.abrirTela(getClass(), btnStart, "admin");
             } else {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Erro ao autenticar!");

@@ -33,7 +33,7 @@
             </Label>
             <Button layoutX="151.0" layoutY="300.0" onAction="#btnLogin" text="Logar" />
             <TextField fx:id="tfNome" layoutX="49.0" layoutY="201.0" promptText="Nome" />
-            <TextField fx:id="tfSenha" layoutX="50.0" layoutY="265.0" promptText="Senha" />
+            <PasswordField fx:id="tfSenha" layoutX="50.0" layoutY="265.0" promptText="Senha" /> 
             <Label layoutX="49.0" layoutY="178.0" text="Login" />
             <Label layoutX="50.0" layoutY="241.0" text="Senha" />
             <TableView fx:id="tvRanking"  layoutX="370.0" layoutY="155.0" prefHeight="331.0" prefWidth="373.0" />

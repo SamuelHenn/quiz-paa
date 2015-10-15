@@ -30,8 +30,8 @@
             <Label fx:id="tvTitle" layoutX="14.0" layoutY="34.0" text="" />
             <TableView fx:id="tvData" layoutX="14.0" layoutY="60.0" prefHeight="488.0" prefWidth="771.0" />
             <Button fx:id="btnNovo" layoutX="740.0" layoutY="30.0" mnemonicParsing="false" onAction="#btnNovaPergunta" text="Novo" />
-            <Button fx:id="btnEdit" layoutX="685.0" layoutY="30.0" mnemonicParsing="false" text="Editar" />
-            <Button fx:id="btnDelete" layoutX="628.0" layoutY="30.0" mnemonicParsing="false" text="Excluir" />
+            <Button fx:id="btnEdit" layoutX="685.0" layoutY="30.0" mnemonicParsing="false" onAction="#btnEdit" text="Editar" />
+            <Button fx:id="btnDelete" layoutX="628.0" layoutY="30.0" mnemonicParsing="false" onAction="#btnExcluir" text="Excluir" />
             <Label fx:id="tvUser" layoutX="14.0" layoutY="565.0" text="Olá" />
          </children>
       </AnchorPane>

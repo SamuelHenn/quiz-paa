@@ -18,7 +18,7 @@ public abstract class ModelDAO<T> {
 
     public void save(T t) {
         session.beginTransaction();
-        session.persist(t);
+        session.saveOrUpdate(t);// persist(t);
         session.getTransaction().commit();
     }
 

@@ -6,22 +6,29 @@ import br.univates.paa.kickquiz.model.Usuario;
 import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class AdminController implements Initializable {
-
-    private Usuario user;
 
     @FXML
     private MenuBar menuBar;
@@ -41,6 +48,32 @@ public class AdminController implements Initializable {
             Utils.abrirTela(getClass(), menuBar, "main");
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    private void btnExcluir(ActionEvent event) {
+        try {
+            excluirPergunta();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Atenção");
+            alert.setHeaderText(e.getMessage());
+            alert.setContentText(null);
+            alert.show();
+        }
+    }
+
+    @FXML
+    private void btnEdit(ActionEvent event) {
+        try {
+            editarPergunta();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Atenção");
+            alert.setHeaderText(e.getMessage());
+            alert.setContentText(null);
+            alert.show();
         }
     }
 
@@ -74,20 +107,29 @@ public class AdminController implements Initializable {
         }
     }
 
+    private void editarPergunta() throws Exception {
+        Pergunta pergunta = (Pergunta) tvData.getItems().get(tvData.getSelectionModel().getSelectedIndex());
+        if (pergunta == null) {
+            throw new Exception("Nenhuma pergunta selecionada");
+        }
+
+        Stage stage = (Stage) tvData.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/cadastro_pergunta.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        CadastroPerguntaController controller = fxmlLoader.<CadastroPerguntaController>getController();
+        controller.setPergunta(pergunta);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
             visibilidadeContent(false);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void setUser(Usuario user) {
-        try {
-            this.user = user;
-            if (user != null) {
-                tvUser.setText("Olá " + user.getNome());
+            Usuario u = Utils.getUserLogado();
+            if (u != null) {
+                tvUser.setText("Olá " + u.getNome());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -100,5 +142,27 @@ public class AdminController implements Initializable {
         btnNovo.setVisible(visible);
         btnEdit.setVisible(visible);
         btnDelete.setVisible(visible);
+    }
+
+    private void excluirPergunta() throws Exception {
+        Pergunta pergunta = (Pergunta) tvData.getItems().get(tvData.getSelectionModel().getSelectedIndex());
+        if (pergunta == null) {
+            throw new Exception("Nenhuma pergunta selecionada");
+        }
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Excluir pergunta");
+        alert.setHeaderText("Você quer mesmo excluir essa pergunta?");
+        ButtonType btnSim = new ButtonType("Sim");
+        ButtonType btnNao = new ButtonType("Não", ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(btnSim, btnNao);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == btnSim) {
+            PerguntaDAO pdao = new PerguntaDAO();
+            pdao.delete(pergunta);
+            btnCadastroPergunta(null);
+        } else {
+            alert.close();
+        }
     }
 }

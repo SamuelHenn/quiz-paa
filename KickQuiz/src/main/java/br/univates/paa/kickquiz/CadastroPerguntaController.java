@@ -3,25 +3,23 @@ package br.univates.paa.kickquiz;
 import br.univates.paa.kickquiz.DAO.PerguntaDAO;
 import br.univates.paa.kickquiz.model.Pergunta;
 import br.univates.paa.kickquiz.model.Resposta;
+import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class CadastroPerguntaController implements Initializable {
+
+    private Pergunta pergunta;
 
     @FXML
     private Button btnVoltar;
@@ -44,14 +42,7 @@ public class CadastroPerguntaController implements Initializable {
     @FXML
     private void btnVoltar(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/admin.fxml"));
-
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add("/styles/Styles.css");
-
-            Stage stage = (Stage) btnVoltar.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+            Utils.abrirTela(getClass(), cbBox, "admin");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -100,14 +91,18 @@ public class CadastroPerguntaController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         try {
-            Pergunta p = new Pergunta();
-            p.setDescricao(taPergunta.getText());
-            p.setDificuldade(cbBox.getSelectionModel().getSelectedIndex());
+            if (pergunta == null) {
+                pergunta = new Pergunta();
+            }
+
+            pergunta.setDescricao(taPergunta.getText());
+            pergunta.setDificuldade(cbBox.getSelectionModel().getSelectedIndex());
+            pergunta.setRespostas(new ArrayList<Resposta>());
             for (int i = 0; i < listRespostas.getItems().size(); i++) {
-                p.addResposta((Resposta) listRespostas.getItems().get(i));
+                pergunta.addResposta((Resposta) listRespostas.getItems().get(i));
             }
             PerguntaDAO pdao = new PerguntaDAO();
-            pdao.save(p);
+            pdao.save(pergunta);
             btnVoltar(null);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -122,6 +117,24 @@ public class CadastroPerguntaController implements Initializable {
             cbBox.getItems().add("Difícil");
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public Pergunta getPergunta() {
+        return pergunta;
+    }
+
+    public void setPergunta(Pergunta pergunta) {
+        this.pergunta = pergunta;
+
+        if (pergunta == null) {
+            return;
+        }
+
+        taPergunta.setText(pergunta.getDescricao());
+        cbBox.getSelectionModel().select(pergunta.getDificuldade());
+        for (Resposta r : pergunta.getRespostas()) {
+            listRespostas.getItems().add(r);
         }
     }
 }
