@@ -17,6 +17,7 @@
                 <Menu mnemonicParsing="false" text="Cadastro">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#btnCadastroPergunta" text="Pergunta" />
+                    <MenuItem mnemonicParsing="false" onAction="#btnCadastroBonus" text="Bonus" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Ajuda">
@@ -29,7 +30,7 @@
             <Button layoutX="750.0" layoutY="561.0" mnemonicParsing="false" onAction="#btnSair" text="Sair" />
             <Label fx:id="tvTitle" layoutX="14.0" layoutY="34.0" text="" />
             <TableView fx:id="tvData" layoutX="14.0" layoutY="60.0" prefHeight="488.0" prefWidth="771.0" />
-            <Button fx:id="btnNovo" layoutX="740.0" layoutY="30.0" mnemonicParsing="false" onAction="#btnNovaPergunta" text="Novo" />
+            <Button fx:id="btnNovo" layoutX="740.0" layoutY="30.0" mnemonicParsing="false" onAction="#btnNovo" text="Novo" />
             <Button fx:id="btnEdit" layoutX="685.0" layoutY="30.0" mnemonicParsing="false" onAction="#btnEdit" text="Editar" />
             <Button fx:id="btnDelete" layoutX="628.0" layoutY="30.0" mnemonicParsing="false" onAction="#btnExcluir" text="Excluir" />
             <Label fx:id="tvUser" layoutX="14.0" layoutY="565.0" text="Olá" />

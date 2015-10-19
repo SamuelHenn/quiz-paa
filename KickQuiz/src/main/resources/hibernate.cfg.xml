@@ -15,5 +15,6 @@
         <mapping class="br.univates.paa.kickquiz.model.Resposta" />
         <mapping class="br.univates.paa.kickquiz.model.Pergunta" />
         <mapping class="br.univates.paa.kickquiz.model.Ranking" />
+        <mapping class="br.univates.paa.kickquiz.model.Bonus" />
     </session-factory>
 </hibernate-configuration>

@@ -1,6 +1,8 @@
 package br.univates.paa.kickquiz;
 
+import br.univates.paa.kickquiz.DAO.BonusDAO;
 import br.univates.paa.kickquiz.DAO.PerguntaDAO;
+import br.univates.paa.kickquiz.model.Bonus;
 import br.univates.paa.kickquiz.model.Pergunta;
 import br.univates.paa.kickquiz.model.Usuario;
 import br.univates.paa.kickquiz.util.Utils;
@@ -30,6 +32,10 @@ import javafx.stage.Stage;
 
 public class AdminController implements Initializable {
 
+    private int opcao = 0;
+    public static final int PERGUNTA = 1;
+    public static final int BONUS = 2;
+
     @FXML
     private MenuBar menuBar;
 
@@ -54,7 +60,14 @@ public class AdminController implements Initializable {
     @FXML
     private void btnExcluir(ActionEvent event) {
         try {
-            excluirPergunta();
+            switch (opcao) {
+                case PERGUNTA:
+                    excluirPergunta();
+                    break;
+                case BONUS:
+                    excluirBonus();
+                    break;
+            }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Atenção");
@@ -67,7 +80,14 @@ public class AdminController implements Initializable {
     @FXML
     private void btnEdit(ActionEvent event) {
         try {
-            editarPergunta();
+            switch (opcao) {
+                case PERGUNTA:
+                    editarPergunta();
+                    break;
+                case BONUS:
+                    editarBonus();
+                    break;
+            }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Atenção");
@@ -83,6 +103,7 @@ public class AdminController implements Initializable {
             PerguntaDAO pdao = new PerguntaDAO();
             List<Pergunta> itens = pdao.listAll();
             ObservableList data = FXCollections.observableList(itens);
+            opcao = PERGUNTA;
 
             visibilidadeContent(true);
             tvTitle.setText("Perguntas");
@@ -99,11 +120,44 @@ public class AdminController implements Initializable {
     }
 
     @FXML
-    private void btnNovaPergunta(ActionEvent event) {
+    private void btnCadastroBonus(ActionEvent event) {
         try {
-            Utils.abrirTela(getClass(), menuBar, "cadastro_pergunta");
+            BonusDAO bdao = new BonusDAO();
+            List<Bonus> itens = bdao.listAll();
+            ObservableList data = FXCollections.observableList(itens);
+            opcao = BONUS;
+
+            visibilidadeContent(true);
+            tvTitle.setText("Bônus");
+            tvData.setItems(data);
+            TableColumn desc = new TableColumn("Descrição");
+            desc.setCellValueFactory(new PropertyValueFactory("descricao"));
+            TableColumn chamada = new TableColumn("Chamada");
+            chamada.setCellValueFactory(new PropertyValueFactory("Chamada"));
+            tvData.getColumns().setAll(desc, chamada);
+            tvData.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    private void btnNovo(ActionEvent event) {
+        try {
+            switch (opcao) {
+                case PERGUNTA:
+                    Utils.abrirTela(getClass(), menuBar, "cadastro_pergunta");
+                    break;
+                case BONUS:
+                    Utils.abrirTela(getClass(), menuBar, "cadastro_bonus");
+                    break;
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Atenção");
+            alert.setHeaderText(e.getMessage());
+            alert.setContentText(null);
+            alert.show();
         }
     }
 
@@ -118,6 +172,22 @@ public class AdminController implements Initializable {
         Parent root = (Parent) fxmlLoader.load();
         CadastroPerguntaController controller = fxmlLoader.<CadastroPerguntaController>getController();
         controller.setPergunta(pergunta);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    private void editarBonus() throws Exception {
+        Bonus bonus = (Bonus) tvData.getItems().get(tvData.getSelectionModel().getSelectedIndex());
+        if (bonus == null) {
+            throw new Exception("Nenhum bonus selecionada");
+        }
+
+        Stage stage = (Stage) tvData.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/cadastro_bonus.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        CadastroBonusController controller = fxmlLoader.<CadastroBonusController>getController();
+        controller.setBonus(bonus);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -161,6 +231,28 @@ public class AdminController implements Initializable {
             PerguntaDAO pdao = new PerguntaDAO();
             pdao.delete(pergunta);
             btnCadastroPergunta(null);
+        } else {
+            alert.close();
+        }
+    }
+    
+    private void excluirBonus() throws Exception {
+        Bonus bonus = (Bonus) tvData.getItems().get(tvData.getSelectionModel().getSelectedIndex());
+        if (bonus == null) {
+            throw new Exception("Nenhum bonus selecionada");
+        }
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Excluir bonus");
+        alert.setHeaderText("Você quer mesmo excluir esse bonus?");
+        ButtonType btnSim = new ButtonType("Sim");
+        ButtonType btnNao = new ButtonType("Não", ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(btnSim, btnNao);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == btnSim) {
+            BonusDAO pdao = new BonusDAO();
+            pdao.delete(bonus);
+            btnCadastroBonus(null);
         } else {
             alert.close();
         }
