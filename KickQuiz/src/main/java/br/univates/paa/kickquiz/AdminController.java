@@ -2,6 +2,7 @@ package br.univates.paa.kickquiz;
 
 import br.univates.paa.kickquiz.DAO.BonusDAO;
 import br.univates.paa.kickquiz.DAO.PerguntaDAO;
+import br.univates.paa.kickquiz.DAO.UsuarioDAO;
 import br.univates.paa.kickquiz.model.Bonus;
 import br.univates.paa.kickquiz.model.Pergunta;
 import br.univates.paa.kickquiz.model.Usuario;
@@ -33,8 +34,10 @@ import javafx.stage.Stage;
 public class AdminController implements Initializable {
 
     private int opcao = 0;
+
     public static final int PERGUNTA = 1;
     public static final int BONUS = 2;
+    public static final int USUARIO = 3;
 
     @FXML
     private MenuBar menuBar;
@@ -67,6 +70,9 @@ public class AdminController implements Initializable {
                 case BONUS:
                     excluirBonus();
                     break;
+                case USUARIO:
+                    excluirUsuario();
+                    break;
             }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -86,6 +92,9 @@ public class AdminController implements Initializable {
                     break;
                 case BONUS:
                     editarBonus();
+                    break;
+                case USUARIO:
+                    editarUsuario();
                     break;
             }
         } catch (Exception e) {
@@ -142,6 +151,28 @@ public class AdminController implements Initializable {
     }
 
     @FXML
+    private void btnCadastroUsuario(ActionEvent event) {
+        try {
+            UsuarioDAO bdao = new UsuarioDAO();
+            List<Usuario> itens = bdao.listAll();
+            ObservableList data = FXCollections.observableList(itens);
+            opcao = USUARIO;
+
+            visibilidadeContent(true);
+            tvTitle.setText("Usuário");
+            tvData.setItems(data);
+            TableColumn nome = new TableColumn("Nome");
+            nome.setCellValueFactory(new PropertyValueFactory("nome"));
+            TableColumn login = new TableColumn("Login");
+            login.setCellValueFactory(new PropertyValueFactory("login"));
+            tvData.getColumns().setAll(nome, login);
+            tvData.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
     private void btnNovo(ActionEvent event) {
         try {
             switch (opcao) {
@@ -150,6 +181,9 @@ public class AdminController implements Initializable {
                     break;
                 case BONUS:
                     Utils.abrirTela(getClass(), menuBar, "cadastro_bonus");
+                    break;
+                case USUARIO:
+                    Utils.abrirTela(getClass(), menuBar, "cadastro_usuario");
                     break;
             }
         } catch (Exception e) {
@@ -176,7 +210,23 @@ public class AdminController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
+
+    private void editarUsuario() throws Exception {
+        Usuario pergunta = (Usuario) tvData.getItems().get(tvData.getSelectionModel().getSelectedIndex());
+        if (pergunta == null) {
+            throw new Exception("Nenhum usuário selecionado");
+        }
+
+        Stage stage = (Stage) tvData.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/cadastro_usuario.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        CadastroUsuarioController controller = fxmlLoader.<CadastroUsuarioController>getController();
+        controller.setUsuario(pergunta);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     private void editarBonus() throws Exception {
         Bonus bonus = (Bonus) tvData.getItems().get(tvData.getSelectionModel().getSelectedIndex());
         if (bonus == null) {
@@ -235,7 +285,7 @@ public class AdminController implements Initializable {
             alert.close();
         }
     }
-    
+
     private void excluirBonus() throws Exception {
         Bonus bonus = (Bonus) tvData.getItems().get(tvData.getSelectionModel().getSelectedIndex());
         if (bonus == null) {
@@ -253,6 +303,28 @@ public class AdminController implements Initializable {
             BonusDAO pdao = new BonusDAO();
             pdao.delete(bonus);
             btnCadastroBonus(null);
+        } else {
+            alert.close();
+        }
+    }
+
+    private void excluirUsuario() throws Exception {
+        Usuario usuario = (Usuario) tvData.getItems().get(tvData.getSelectionModel().getSelectedIndex());
+        if (usuario == null) {
+            throw new Exception("Nenhum usuário selecionada");
+        }
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Excluir usuário");
+        alert.setHeaderText("Você quer mesmo excluir esse usuário?");
+        ButtonType btnSim = new ButtonType("Sim");
+        ButtonType btnNao = new ButtonType("Não", ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(btnSim, btnNao);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == btnSim) {
+            UsuarioDAO pdao = new UsuarioDAO();
+            pdao.delete(usuario);
+            btnCadastroUsuario(null);
         } else {
             alert.close();
         }
