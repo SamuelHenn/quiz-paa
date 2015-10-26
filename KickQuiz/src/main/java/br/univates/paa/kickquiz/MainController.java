@@ -75,6 +75,7 @@ public class MainController implements Initializable {
             } else {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Erro ao autenticar!");
+                Utils.escreveLog("teste", "Tentativa de login com usuário \""+tfNome.getText()+"\"", 2);
                 alert.setHeaderText("Usuário ou senha não conferem");
                 alert.setContentText(null);
                 alert.show();
