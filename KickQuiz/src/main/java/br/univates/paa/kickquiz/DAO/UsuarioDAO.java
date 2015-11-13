@@ -23,6 +23,16 @@ public class UsuarioDAO extends ModelDAO<Usuario> {
     public Class getObject() {
         return Usuario.class;
     }
+    
+    public Usuario getUsuarioByNome(String nome)
+    {
+        session.beginTransaction();
+        Query query = session.createQuery("from Usuario where nome = :nome");
+        query.setParameter("nome", nome);
+        List list = query.list();
+        session.getTransaction().commit();
+        return list.size() >= 1 ? (Usuario) list.get(0) : null;
+    }
 
     public Usuario checkLogin(Usuario u) {
         session.beginTransaction();

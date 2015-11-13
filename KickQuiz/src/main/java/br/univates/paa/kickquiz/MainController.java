@@ -7,6 +7,7 @@ import br.univates.paa.kickquiz.model.Usuario;
 import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,13 +19,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-//import javafx.scene.control.Alert;
-//import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -44,13 +44,29 @@ public class MainController implements Initializable {
 
     @FXML
     private void btnStart(ActionEvent event) {
+        pedirNome();
+    }
+
+    private void pedirNome() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Iniciar jogo");
+        dialog.setHeaderText("Olá, bem vindo ao KickQuiz");
+        dialog.setContentText("Por favor, digite seu nome:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            abrirPerguntas(result.get());
+        }
+    }
+
+    private void abrirPerguntas(String nome) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/pergunta.fxml"));
-
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add("/styles/Styles.css");
-
             Stage stage = (Stage) btnStart.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/pergunta.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            PerguntaController controller = fxmlLoader.<PerguntaController>getController();
+            controller.setUsuario(nome);
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
@@ -75,7 +91,7 @@ public class MainController implements Initializable {
             } else {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Erro ao autenticar!");
-                Utils.escreveLog("teste", "Tentativa de login com usuário \""+tfNome.getText()+"\"", 2);
+                Utils.escreveLog("teste", "Tentativa de login com usuário \"" + tfNome.getText() + "\"", 2);
                 alert.setHeaderText("Usuário ou senha não conferem");
                 alert.setContentText(null);
                 alert.show();

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,6 +25,46 @@ public class Tentativa implements java.io.Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private int id;
+
+    @OneToOne(mappedBy = "")
+    private Usuario usuario;
     
+    @OneToOne
+    private Resposta resposta;
     
+    @OneToOne
+    private Bonus bonus;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Resposta getResposta() {
+        return resposta;
+    }
+
+    public void setResposta(Resposta resposta) {
+        this.resposta = resposta;
+    }
+
+    public Bonus getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(Bonus bonus) {
+        this.bonus = bonus;
+    }
+
 }
