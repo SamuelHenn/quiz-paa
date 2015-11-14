@@ -5,11 +5,14 @@
  */
 package br.univates.paa.kickquiz.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,13 +29,16 @@ public class Tentativa implements java.io.Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    @OneToOne(mappedBy = "")
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-    
-    @OneToOne
+
+    @ManyToOne
+    @JoinColumn(name = "id_resposta")
     private Resposta resposta;
-    
-    @OneToOne
+
+    @ManyToOne
+    @JoinColumn(name = "id_bonus")
     private Bonus bonus;
 
     public int getId() {

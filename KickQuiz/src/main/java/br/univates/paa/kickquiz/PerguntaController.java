@@ -1,8 +1,11 @@
 package br.univates.paa.kickquiz;
 
 import br.univates.paa.kickquiz.DAO.PerguntaDAO;
+import br.univates.paa.kickquiz.DAO.TentativaDAO;
 import br.univates.paa.kickquiz.DAO.UsuarioDAO;
 import br.univates.paa.kickquiz.model.Pergunta;
+import br.univates.paa.kickquiz.model.Resposta;
+import br.univates.paa.kickquiz.model.Tentativa;
 import br.univates.paa.kickquiz.model.Usuario;
 import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
@@ -37,6 +40,28 @@ public class PerguntaController implements Initializable {
     @FXML
     private void btnProxima(ActionEvent event) {
         try {
+            Resposta r = null;
+            if (rb1.isSelected())
+                r = pergunta.getRespostas().get(0);
+            if (rb2.isSelected())
+                r = pergunta.getRespostas().get(1);
+            if (rb3.isSelected())
+                r = pergunta.getRespostas().get(2);
+            if (rb4.isSelected())
+                r = pergunta.getRespostas().get(3);
+            if (rb5.isSelected())
+                r = pergunta.getRespostas().get(4);
+            
+            if (r == null)
+            {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Atenção");
+                alert.setHeaderText("Você deve marcar uma resposta");
+                alert.setContentText(null);
+                alert.show();
+                return;
+            }
+            
             if (pergunta.getRespostas().get(0).isFl_correta() && rb1.isSelected()
                     || pergunta.getRespostas().get(1).isFl_correta() && rb2.isSelected()
                     || pergunta.getRespostas().get(2).isFl_correta() && rb3.isSelected()
@@ -49,6 +74,14 @@ public class PerguntaController implements Initializable {
                 alert.setContentText(null);
                 alert.show();
             }
+            
+            TentativaDAO tdao = new TentativaDAO();
+            Tentativa t = new Tentativa();
+            t.setBonus(null);
+            t.setResposta(r);
+            t.setUsuario(usuario);
+            tdao.save(t);
+            
             carregarPergunta();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -111,6 +144,15 @@ public class PerguntaController implements Initializable {
     public void setUsuario(String nome) {
         UsuarioDAO u = new UsuarioDAO();
         usuario = u.getUsuarioByNome(nome);
+        
+        if (usuario == null)
+        {
+            usuario = new Usuario();
+            usuario.setNome(nome);
+            UsuarioDAO udao = new UsuarioDAO();
+            udao.save(usuario);
+        }
+        
         tvNome.setText(usuario.getNome());
     }
 }
