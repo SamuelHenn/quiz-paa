@@ -6,6 +6,7 @@
 package br.univates.paa.kickquiz.util;
 
 import br.univates.paa.kickquiz.DAO.ConfiguracaoDAO;
+import br.univates.paa.kickquiz.DAO.UsuarioDAO;
 import br.univates.paa.kickquiz.model.Configuracao;
 import br.univates.paa.kickquiz.model.Usuario;
 import java.io.BufferedWriter;
@@ -43,6 +44,8 @@ public class Utils {
 
     public static void setUserLogado(Usuario userLogado) {
         Utils.userLogado = userLogado;
+        UsuarioDAO dao = new UsuarioDAO();
+        dao.setUserLogado(userLogado);
     }
 
     public static void escreveLog(String titulo, String frase) {

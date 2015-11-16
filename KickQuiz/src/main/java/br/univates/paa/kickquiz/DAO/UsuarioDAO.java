@@ -19,6 +19,13 @@ import org.hibernate.Query;
  */
 public class UsuarioDAO extends ModelDAO<Usuario> {
 
+    public void setUserLogado(Usuario userLogado) {
+        session.beginTransaction();
+        Query query = session.createQuery("SET usuario.id = :id");
+        query.setParameter("id", userLogado.getId());
+        session.getTransaction().commit();
+    }
+
     @Override
     public Class getObject() {
         return Usuario.class;
