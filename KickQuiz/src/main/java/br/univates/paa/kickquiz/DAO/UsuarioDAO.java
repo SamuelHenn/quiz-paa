@@ -21,8 +21,7 @@ public class UsuarioDAO extends ModelDAO<Usuario> {
 
     public void setUserLogado(Usuario userLogado) {
         session.beginTransaction();
-        Query query = session.createQuery("SET usuario.id = :id");
-        query.setParameter("id", userLogado.getId());
+        session.createSQLQuery("SET usuario.id = " + userLogado.getId()).executeUpdate();
         session.getTransaction().commit();
     }
 

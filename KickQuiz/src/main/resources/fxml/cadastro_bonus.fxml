@@ -27,7 +27,6 @@
                     </font>
                 </Label>
                 <TextField fx:id="tvBonus" layoutX="140.0" layoutY="60.0" prefHeight="20.0" prefWidth="330.0" />
-                <TextField fx:id="tvChamada" layoutX="140.0" layoutY="109.0" prefHeight="25.0" prefWidth="330.0" />
                 <Button layoutX="705.0" layoutY="344.0" mnemonicParsing="false" onAction="#save" text="Salvar">
                     <font>
                         <javafx.scene.text.Font size="20.0" />
@@ -38,6 +37,7 @@
                         <javafx.scene.text.Font size="20.0" />
                     </font>
                 </Button>
+            <ComboBox fx:id="tvChamada" layoutX="140.0" layoutY="110.0" prefHeight="25.0" prefWidth="330.0" />
             </children>
         </AnchorPane>
     </children>

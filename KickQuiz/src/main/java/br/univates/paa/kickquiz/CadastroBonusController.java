@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class CadastroBonusController implements Initializable {
@@ -19,7 +20,7 @@ public class CadastroBonusController implements Initializable {
     private Button btnVoltar;
 
     @FXML
-    private TextField tvChamada;
+    private ComboBox tvChamada;
 
     @FXML
     private TextField tvBonus;
@@ -41,7 +42,7 @@ public class CadastroBonusController implements Initializable {
             }
 
             bonus.setDescricao(tvBonus.getText());
-            bonus.setChamada(tvChamada.getText());
+            bonus.setChamada(tvChamada.getItems().get(tvChamada.getSelectionModel().getSelectedIndex()).toString());
             BonusDAO pdao = new BonusDAO();
             pdao.save(bonus);
             btnVoltar(null);
@@ -52,6 +53,9 @@ public class CadastroBonusController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tvChamada.getItems().add("Dica");
+        tvChamada.getItems().add("Eliminar resposta");
+        tvChamada.getItems().add("Pular");
     }
 
     public void setBonus(Bonus bonus) {
@@ -62,6 +66,6 @@ public class CadastroBonusController implements Initializable {
         }
 
         tvBonus.setText(bonus.getDescricao());
-        tvChamada.setText(bonus.getChamada());
+        tvChamada.getSelectionModel().select(bonus.getChamada());
     }
 }

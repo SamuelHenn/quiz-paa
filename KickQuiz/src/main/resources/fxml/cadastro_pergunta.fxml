@@ -47,7 +47,7 @@
                         <javafx.scene.text.Font size="20.0" />
                     </font>
                 </Button>
-                <ListView fx:id="listRespostas" layoutX="140.0" layoutY="260.0" prefHeight="120.0" prefWidth="330.0" />
+                <ListView fx:id="listRespostas" layoutX="140.0" layoutY="260.0" prefHeight="100.0" prefWidth="330.0" />
             </children>
         </AnchorPane>
     </children>

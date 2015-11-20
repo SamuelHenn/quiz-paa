@@ -63,7 +63,7 @@ public class CadastroPerguntaController implements Initializable {
     @FXML
     private void addResposta(ActionEvent event) {
         try {
-            if (listRespostas.getItems().size() == 5) {
+            if (listRespostas.getItems().size() == 4) {
                 return;
             }
 
