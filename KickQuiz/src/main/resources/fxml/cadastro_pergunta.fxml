@@ -9,7 +9,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.univates.paa.kickquiz.CadastroPerguntaController">
     <children>
-        <AnchorPane prefHeight="402.0" prefWidth="800.0">
+        <AnchorPane prefHeight="436.0" prefWidth="800.0">
             <children>
                 <Label layoutX="14.0" layoutY="14.0" text="Cadastro Pergunta">
                     <font>
@@ -48,6 +48,12 @@
                     </font>
                 </Button>
                 <ListView fx:id="listRespostas" layoutX="140.0" layoutY="260.0" prefHeight="100.0" prefWidth="330.0" />
+                <Label layoutX="37.0" layoutY="380.0" text="Dica">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="tvDica" layoutX="140.0" layoutY="379.0" prefHeight="25.0" prefWidth="330.0" />
             </children>
         </AnchorPane>
     </children>

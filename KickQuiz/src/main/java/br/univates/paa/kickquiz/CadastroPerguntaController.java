@@ -34,7 +34,7 @@ public class CadastroPerguntaController implements Initializable {
     private ListView listRespostas;
 
     @FXML
-    private TextField tvResposta;
+    private TextField tvResposta, tvDica;
 
     @FXML
     private TextArea taPergunta;
@@ -97,6 +97,7 @@ public class CadastroPerguntaController implements Initializable {
 
             pergunta.setDescricao(taPergunta.getText());
             pergunta.setDificuldade(cbBox.getSelectionModel().getSelectedIndex());
+            pergunta.setDica(tvDica.getText());
             pergunta.setRespostas(new ArrayList<Resposta>());
             for (int i = 0; i < listRespostas.getItems().size(); i++) {
                 pergunta.addResposta((Resposta) listRespostas.getItems().get(i));
@@ -132,6 +133,7 @@ public class CadastroPerguntaController implements Initializable {
         }
 
         taPergunta.setText(pergunta.getDescricao());
+        tvDica.setText(pergunta.getDica());
         cbBox.getSelectionModel().select(pergunta.getDificuldade());
         for (Resposta r : pergunta.getRespostas()) {
             listRespostas.getItems().add(r);

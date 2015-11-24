@@ -2,9 +2,12 @@ package br.univates.paa.kickquiz;
 
 import br.univates.paa.kickquiz.DAO.BonusDAO;
 import br.univates.paa.kickquiz.DAO.PerguntaDAO;
+import br.univates.paa.kickquiz.DAO.PermissoesDAO;
 import br.univates.paa.kickquiz.DAO.UsuarioDAO;
 import br.univates.paa.kickquiz.model.Bonus;
 import br.univates.paa.kickquiz.model.Pergunta;
+import br.univates.paa.kickquiz.model.Permissao;
+import br.univates.paa.kickquiz.model.Permissoes;
 import br.univates.paa.kickquiz.model.Usuario;
 import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
@@ -113,8 +116,9 @@ public class AdminController implements Initializable {
             List<Pergunta> itens = pdao.listAll();
             ObservableList data = FXCollections.observableList(itens);
             opcao = PERGUNTA;
-
+            
             visibilidadeContent(true);
+            permicaoBotoes(Pergunta.class.getName());
             tvTitle.setText("Perguntas");
             tvData.setItems(data);
             TableColumn desc = new TableColumn("Descrição");
@@ -135,8 +139,9 @@ public class AdminController implements Initializable {
             List<Bonus> itens = bdao.listAll();
             ObservableList data = FXCollections.observableList(itens);
             opcao = BONUS;
-
+            
             visibilidadeContent(true);
+            permicaoBotoes(Bonus.class.getName());
             tvTitle.setText("Bônus");
             tvData.setItems(data);
             TableColumn desc = new TableColumn("Descrição");
@@ -157,8 +162,9 @@ public class AdminController implements Initializable {
             List<Usuario> itens = bdao.listAll();
             ObservableList data = FXCollections.observableList(itens);
             opcao = USUARIO;
-
+            
             visibilidadeContent(true);
+            permicaoBotoes(Usuario.class.getName());
             tvTitle.setText("Usuário");
             tvData.setItems(data);
             TableColumn nome = new TableColumn("Nome");
@@ -170,6 +176,13 @@ public class AdminController implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void permicaoBotoes(String obj) {
+        PermissoesDAO pdao = new PermissoesDAO();
+        btnNovo.setVisible(pdao.temPermissao(new Permissoes(btnNovo.getId(), obj, Utils.getUserLogado().getPermissao())));
+        btnEdit.setVisible(pdao.temPermissao(new Permissoes(btnEdit.getId(), obj, Utils.getUserLogado().getPermissao())));
+        btnDelete.setVisible(pdao.temPermissao(new Permissoes(btnDelete.getId(), obj, Utils.getUserLogado().getPermissao())));
     }
 
     @FXML

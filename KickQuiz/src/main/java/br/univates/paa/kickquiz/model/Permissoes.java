@@ -13,26 +13,32 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.ColumnTransformer;
 
 /**
  *
  * @author Avell G1310 MAX
  */
 @Entity
-@Table(name = "usuarios")
-public class Usuario implements java.io.Serializable {
+@Table(name = "permissoes")
+public class Permissoes implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private int id;
-    private String nome;
-    @ColumnTransformer(write = "sha1(?)")
-    private String senha;
-    private String login;
+    private String botao;
+    private String objeto;
     @Enumerated(EnumType.STRING)
     private Permissao permissao;
+
+    public Permissoes() {
+    }
+
+    public Permissoes(String botao, String objeto, Permissao permissao) {
+        this.botao = botao;
+        this.objeto = objeto;
+        this.permissao = permissao;
+    }
 
     public int getId() {
         return id;
@@ -42,28 +48,20 @@ public class Usuario implements java.io.Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getBotao() {
+        return botao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setBotao(String botao) {
+        this.botao = botao;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getObjeto() {
+        return objeto;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
+    public void setObjeto(String objeto) {
+        this.objeto = objeto;
     }
 
     public Permissao getPermissao() {

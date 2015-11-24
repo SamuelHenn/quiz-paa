@@ -32,6 +32,7 @@ public class Pergunta implements java.io.Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
     private String descricao;
+    private String dica;
     private int dificuldade;
     @OneToMany(mappedBy = "pergunta", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Resposta> respostas;
@@ -56,6 +57,14 @@ public class Pergunta implements java.io.Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getDica() {
+        return dica;
+    }
+
+    public void setDica(String dica) {
+        this.dica = dica;
     }
 
     public int getDificuldade() {

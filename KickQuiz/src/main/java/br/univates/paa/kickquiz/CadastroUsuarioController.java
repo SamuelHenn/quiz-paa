@@ -1,6 +1,7 @@
 package br.univates.paa.kickquiz;
 
 import br.univates.paa.kickquiz.DAO.UsuarioDAO;
+import br.univates.paa.kickquiz.model.Permissao;
 import br.univates.paa.kickquiz.model.Usuario;
 import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
@@ -9,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -24,9 +26,12 @@ public class CadastroUsuarioController implements Initializable {
 
     @FXML
     private TextField tvLogin;
-    
+
     @FXML
     private PasswordField tvSenha;
+
+    @FXML
+    private ComboBox cbPermissao;
 
     @FXML
     private void btnVoltar(ActionEvent event) {
@@ -47,6 +52,7 @@ public class CadastroUsuarioController implements Initializable {
             usuario.setNome(tvNome.getText());
             usuario.setLogin(tvLogin.getText());
             usuario.setSenha(tvSenha.getText());
+            usuario.setPermissao((Permissao) cbPermissao.getSelectionModel().getSelectedItem());
             UsuarioDAO pdao = new UsuarioDAO();
             pdao.save(usuario);
             btnVoltar(null);
@@ -57,6 +63,8 @@ public class CadastroUsuarioController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        cbPermissao.getItems().add(Permissao.USUARIO);
+        cbPermissao.getItems().add(Permissao.ADMIN);
     }
 
     public void setUsuario(Usuario usuario) {
@@ -69,5 +77,6 @@ public class CadastroUsuarioController implements Initializable {
         tvNome.setText(usuario.getNome());
         tvLogin.setText(usuario.getLogin());
         tvSenha.setText(usuario.getSenha());
+        cbPermissao.getSelectionModel().select(usuario.getPermissao());
     }
 }
