@@ -116,7 +116,7 @@ public class AdminController implements Initializable {
             List<Pergunta> itens = pdao.listAll();
             ObservableList data = FXCollections.observableList(itens);
             opcao = PERGUNTA;
-            
+
             visibilidadeContent(true);
             permicaoBotoes(Pergunta.class.getName());
             tvTitle.setText("Perguntas");
@@ -139,7 +139,7 @@ public class AdminController implements Initializable {
             List<Bonus> itens = bdao.listAll();
             ObservableList data = FXCollections.observableList(itens);
             opcao = BONUS;
-            
+
             visibilidadeContent(true);
             permicaoBotoes(Bonus.class.getName());
             tvTitle.setText("Bônus");
@@ -162,7 +162,7 @@ public class AdminController implements Initializable {
             List<Usuario> itens = bdao.listAll();
             ObservableList data = FXCollections.observableList(itens);
             opcao = USUARIO;
-            
+
             visibilidadeContent(true);
             permicaoBotoes(Usuario.class.getName());
             tvTitle.setText("Usuário");
@@ -173,6 +173,28 @@ public class AdminController implements Initializable {
             login.setCellValueFactory(new PropertyValueFactory("login"));
             tvData.getColumns().setAll(nome, login);
             tvData.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    private void btnConfiguracoes(ActionEvent event) {
+        try {
+            Utils.abrirTela(getClass(), menuBar, "configuracao");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    private void btnAjuda(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("KickQuiz");
+            alert.setHeaderText("É um super jogo de perguntas e respostas!");
+            alert.setContentText("Desenvolvido por Miguel e Samuel para cadeira de programação avançada de aplicações.");
+            alert.show();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

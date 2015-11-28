@@ -17,6 +17,7 @@ public abstract class ModelDAO<T> {
     public Session session = HibernateUtil.getSession();
 
     public void save(T t) {
+        session = HibernateUtil.getSession();
         session.beginTransaction();
         session.saveOrUpdate(t);// persist(t);
         session.getTransaction().commit();

@@ -21,6 +21,7 @@ public class ConfiguracaoDAO extends ModelDAO<Configuracao> {
     }
 
     public Configuracao getByChave(String chave) {
+        session = HibernateUtil.getSession();
         session.beginTransaction();
         Query query = session.createQuery("from Configuracao where chave = :chave");
         query.setParameter("chave", chave);
