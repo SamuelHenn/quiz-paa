@@ -7,6 +7,7 @@ import br.univates.paa.kickquiz.model.Pergunta;
 import br.univates.paa.kickquiz.model.Resposta;
 import br.univates.paa.kickquiz.model.Tentativa;
 import br.univates.paa.kickquiz.model.Usuario;
+import br.univates.paa.kickquiz.rede.Cliente;
 import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
 import java.util.List;
@@ -28,6 +29,8 @@ public class PerguntaController implements Initializable {
     private Pergunta pergunta;
     private Usuario usuario;
     private int num = 0;
+    
+    public Cliente cliente;
 
     @FXML
     private Label tvPergunta, tvNome, tvNumero;
@@ -124,6 +127,8 @@ public class PerguntaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            cliente = new Cliente("127.0.0.1");
+            
             PerguntaDAO pdao = new PerguntaDAO();
             perguntas = pdao.listAll();
 

@@ -6,9 +6,10 @@ import br.univates.paa.kickquiz.DAO.PermissoesDAO;
 import br.univates.paa.kickquiz.DAO.UsuarioDAO;
 import br.univates.paa.kickquiz.model.Bonus;
 import br.univates.paa.kickquiz.model.Pergunta;
-import br.univates.paa.kickquiz.model.Permissao;
 import br.univates.paa.kickquiz.model.Permissoes;
 import br.univates.paa.kickquiz.model.Usuario;
+import br.univates.paa.kickquiz.rede.Jogador;
+import br.univates.paa.kickquiz.rede.Servidor;
 import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
 import java.util.List;
@@ -41,6 +42,9 @@ public class AdminController implements Initializable {
     public static final int PERGUNTA = 1;
     public static final int BONUS = 2;
     public static final int USUARIO = 3;
+    public static final int CLIENTES = 4;
+
+    public Servidor servidor;
 
     @FXML
     private MenuBar menuBar;
@@ -53,6 +57,30 @@ public class AdminController implements Initializable {
 
     @FXML
     private Button btnNovo, btnEdit, btnDelete;
+    
+    @FXML
+    private void btnClientes(ActionEvent event) {
+        try {
+            List<Jogador> itens = servidor.getClientes();
+            ObservableList data = FXCollections.observableList(itens);
+            opcao = CLIENTES;
+
+            visibilidadeContent(true);
+            permicaoBotoes(Pergunta.class.getName());
+            tvTitle.setText("Jogadores");
+            tvData.setItems(data);
+            TableColumn desc = new TableColumn("Descrição");
+            desc.setCellValueFactory(new PropertyValueFactory("descricao"));
+            tvData.getColumns().setAll(desc);
+            tvData.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Atenção");
+            alert.setHeaderText(e.getMessage());
+            alert.setContentText(null);
+            alert.show();
+        }
+    }
 
     @FXML
     private void btnSair(ActionEvent event) {
@@ -281,6 +309,13 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            servidor = new Servidor(new Runnable() {
+
+                @Override
+                public void run() {
+                    btnClientes(null);
+                }
+            });
             visibilidadeContent(false);
             Usuario u = Utils.getUserLogado();
             if (u != null) {
