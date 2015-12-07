@@ -1,5 +1,6 @@
 package br.univates.paa.kickquiz.rede;
 
+import br.univates.paa.kickquiz.AdminController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -11,13 +12,13 @@ import java.util.logging.Logger;
 public class Servidor {
 
     private ArrayList<Jogador> clientes;
-    private Runnable runOnConect;
+    private AdminController.RunMenssage runOnMenssage;
     ServerSocket socketServidor = null;
     PrintWriter outputSocket = null;
 
-    public Servidor(Runnable runOnConect) {
+    public Servidor(AdminController.RunMenssage runOnConect) {
         this.clientes = new ArrayList();
-        this.runOnConect = runOnConect;
+        this.runOnMenssage = runOnConect;
 
         ServerRun sr = new ServerRun();
         sr.start();
@@ -31,7 +32,7 @@ public class Servidor {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            outputSocket.println("[" + tipo + ";" + valor + "]");
+            outputSocket.println(tipo + ";" + valor);
             outputSocket.flush();
         } catch (NullPointerException e) {
             System.out.println("Client Closed");
@@ -56,16 +57,13 @@ public class Servidor {
                     j.setDescricao("Jogador " + (clientes.size() + 1));
                     j.setSocket(socketNovo);
                     System.out.println("Nova conexão");
-                    ObterMensagem obterMensagensCliente = new ObterMensagem(socketNovo);
+                    ObterMensagem obterMensagensCliente = new ObterMensagem(socketNovo, runOnMenssage);
                     j.setObterMensagem(obterMensagensCliente);
                     j.getObterMensagem().start();
                     EnviarMensagem enviarMensagensCliente = new EnviarMensagem(socketNovo);
                     j.setEnviarMensagem(enviarMensagensCliente);
                     j.getEnviarMensagem().start();
                     clientes.add(j);
-                    if (runOnConect != null) {
-                        runOnConect.run();
-                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Connection Error");

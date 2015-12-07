@@ -127,7 +127,8 @@ public class PerguntaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            cliente = new Cliente("127.0.0.1");
+            cliente = new Cliente("192.168.0.15");
+            cliente.enviaMensagem("1", usuario.getNome());
             
             PerguntaDAO pdao = new PerguntaDAO();
             perguntas = pdao.listAll();

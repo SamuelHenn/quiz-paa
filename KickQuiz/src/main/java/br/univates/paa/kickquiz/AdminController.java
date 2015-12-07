@@ -311,14 +311,9 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            RunMenssage r = new RunMenssage();
             if (Utils.servidor == null) {
-                Utils.servidor = new Servidor(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        btnClientes(null);
-                    }
-                });
+                Utils.servidor = new Servidor(r);
             }
 
             visibilidadeContent(false);
@@ -329,6 +324,33 @@ public class AdminController implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public class RunMenssage implements Runnable {
+
+        private String message = null;
+
+        @Override
+        public void run() {
+            if (message == null) {
+                return;
+            }
+
+            String[] acao = message.split(";");
+            if (acao[0].equals("1")) {
+                Utils.servidor.getClientes().get(0).setDescricao(acao[1]);
+                btnClientes(null);
+            }
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
     }
 
     private void visibilidadeContent(boolean visible) {

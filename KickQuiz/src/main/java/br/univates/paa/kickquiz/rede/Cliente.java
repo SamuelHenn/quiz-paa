@@ -30,7 +30,7 @@ public class Cliente {
             e.printStackTrace();
             System.err.print("IO Exception");
         }
-        ObterMensagem obterMensagens = new ObterMensagem(this.socket);
+        ObterMensagem obterMensagens = new ObterMensagem(this.socket, null);
         obterMensagens.start();
         EnviarMensagem enviarMensagens = new EnviarMensagem(this.socket);
         enviarMensagens.start();
@@ -69,7 +69,7 @@ public class Cliente {
             System.out.println("IO error in server thread");
         }
         try {
-            outputSocket.println("[" + tipo + ";" + valor + "]");
+            outputSocket.println(tipo + ";" + valor);
             outputSocket.flush();
         } catch (NullPointerException e) {
             System.out.println("Client " + line + " Closed");

@@ -1,19 +1,21 @@
 package br.univates.paa.kickquiz.rede;
 
+import br.univates.paa.kickquiz.AdminController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-
 
 public class ObterMensagem extends Thread {
 
     String line = null;
     BufferedReader inputSocket = null;
     Socket cliente = null;
+    private AdminController.RunMenssage runOnMenssage;
 
-    public ObterMensagem(Socket cliente) {
+    public ObterMensagem(Socket cliente, AdminController.RunMenssage runOnConect) {
         this.cliente = cliente;
+        this.runOnMenssage = runOnConect;
     }
 
     public void run() {
@@ -26,6 +28,10 @@ public class ObterMensagem extends Thread {
             line = inputSocket.readLine();
             while (line.compareTo("QUIT") != 0) {
                 System.out.println("Mensagem do cliente :  " + line);
+                if (line != null && line.length() > 0 && runOnMenssage != null) {
+                    runOnMenssage.setMessage(line);
+                    runOnMenssage.run();
+                }
                 line = inputSocket.readLine();
             }
         } catch (IOException e) {
