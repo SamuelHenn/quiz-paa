@@ -9,25 +9,30 @@ import java.net.Socket;
 
 public class Cliente {
 
+    private Socket socket = null;
+    private String line = null;
+    private BufferedReader inputSocket = null;
+    private PrintWriter outputSocket = null;
+    private BufferedReader bufferReader = null;
+
     public Cliente(String host) throws IOException {
         InetAddress address = InetAddress.getByName(host);
-        Socket socket = null;
         String line = null;
         BufferedReader bufferReader = null;
         BufferedReader inputSocket = null;
         PrintWriter outputSocket = null;
         try {
-            socket = new Socket(address, 4445); // You can use static final constant PORT_NUM
+            this.socket = new Socket(address, 4445); // You can use static final constant PORT_NUM
             bufferReader = new BufferedReader(new InputStreamReader(System.in));
-            inputSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            outputSocket = new PrintWriter(socket.getOutputStream());
+            inputSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            outputSocket = new PrintWriter(this.socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
             System.err.print("IO Exception");
         }
-        ObterMensagem obterMensagens = new ObterMensagem(socket);
+        ObterMensagem obterMensagens = new ObterMensagem(this.socket);
         obterMensagens.start();
-        EnviarMensagem enviarMensagens = new EnviarMensagem(socket);
+        EnviarMensagem enviarMensagens = new EnviarMensagem(this.socket);
         enviarMensagens.start();
 
         System.out.println("Client Address : " + address);
@@ -55,5 +60,36 @@ public class Cliente {
 //            socket.close();
 //            System.out.println("Connection Closed");
 //        }
+    }
+
+    public void enviaMensagem(String tipo, String valor) {
+        try {
+            outputSocket = new PrintWriter(this.socket.getOutputStream());
+        } catch (IOException e) {
+            System.out.println("IO error in server thread");
+        }
+        try {
+            outputSocket.println("[" + tipo + ";" + valor + "]");
+            outputSocket.flush();
+        } catch (NullPointerException e) {
+            System.out.println("Client " + line + " Closed");
+        }
+    }
+
+    public void fechar() {
+        try {
+            System.out.println("Connection Closing..");
+            if (inputSocket != null) {
+                inputSocket.close();
+            }
+            if (outputSocket != null) {
+                outputSocket.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
+        } catch (IOException ie) {
+            System.out.println("Socket Close Error");
+        }
     }
 }
