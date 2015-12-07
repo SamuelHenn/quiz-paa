@@ -9,6 +9,7 @@ import br.univates.paa.kickquiz.DAO.ConfiguracaoDAO;
 import br.univates.paa.kickquiz.DAO.UsuarioDAO;
 import br.univates.paa.kickquiz.model.Configuracao;
 import br.univates.paa.kickquiz.model.Usuario;
+import br.univates.paa.kickquiz.rede.Servidor;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -28,6 +29,7 @@ import javafx.stage.Stage;
 public class Utils {
 
     private static Usuario userLogado;
+    public static Servidor servidor;
 
     public static void abrirTela(Class classe, Control control, String tela) throws Exception {
         Parent root = FXMLLoader.load(classe.getResource("/fxml/" + tela + ".fxml"));

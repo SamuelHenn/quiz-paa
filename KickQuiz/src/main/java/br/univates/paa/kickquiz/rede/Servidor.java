@@ -9,41 +9,48 @@ public class Servidor {
 
     private ArrayList<Jogador> clientes;
     private Runnable runOnConect;
+    ServerSocket socketServidor = null;
 
     public Servidor(Runnable runOnConect) {
         this.clientes = new ArrayList();
         this.runOnConect = runOnConect;
-        Socket socketNovo = null;
-        ServerSocket socketServidor = null;
-        System.out.println("Servidor escutando......");
-        try {
-            socketServidor = new ServerSocket(4445);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Server error");
-        }
 
-        while (true) {
+        ServerRun sr = new ServerRun();
+        sr.start();
+    }
+
+    public class ServerRun extends Thread {
+
+        public void run() {
+            System.out.println("Servidor escutando......");
             try {
-                socketNovo = socketServidor.accept();
-                if (this.runOnConect != null) {
-                    this.runOnConect.run();
-                }
-
-                Jogador j = new Jogador();
-                j.setDescricao("Jogador " + (clientes.size() + 1));
-                j.setSocket(socketNovo);
-                System.out.println("Nova conexão");
-                ObterMensagem obterMensagensCliente = new ObterMensagem(socketNovo);
-                j.setObterMensagem(obterMensagensCliente);
-                j.getObterMensagem().start();
-                EnviarMensagem enviarMensagensCliente = new EnviarMensagem(socketNovo);
-                j.setEnviarMensagem(enviarMensagensCliente);
-                j.getEnviarMensagem().start();
-                this.clientes.add(j);
-            } catch (Exception e) {
+                socketServidor = new ServerSocket(4445);
+            } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Connection Error");
+                System.out.println("Server error");
+            }
+            Socket socketNovo = null;
+            while (true) {
+                try {
+                    socketNovo = socketServidor.accept();
+                    Jogador j = new Jogador();
+                    j.setDescricao("Jogador " + (clientes.size() + 1));
+                    j.setSocket(socketNovo);
+                    System.out.println("Nova conexão");
+                    ObterMensagem obterMensagensCliente = new ObterMensagem(socketNovo);
+                    j.setObterMensagem(obterMensagensCliente);
+                    j.getObterMensagem().start();
+                    EnviarMensagem enviarMensagensCliente = new EnviarMensagem(socketNovo);
+                    j.setEnviarMensagem(enviarMensagensCliente);
+                    j.getEnviarMensagem().start();
+                    clientes.add(j);
+                    if (runOnConect != null) {
+                        runOnConect.run();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Connection Error");
+                }
             }
         }
     }

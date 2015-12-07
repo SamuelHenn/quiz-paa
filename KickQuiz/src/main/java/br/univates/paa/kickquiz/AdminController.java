@@ -44,8 +44,6 @@ public class AdminController implements Initializable {
     public static final int USUARIO = 3;
     public static final int CLIENTES = 4;
 
-    public Servidor servidor;
-
     @FXML
     private MenuBar menuBar;
 
@@ -57,15 +55,19 @@ public class AdminController implements Initializable {
 
     @FXML
     private Button btnNovo, btnEdit, btnDelete;
-    
+
     @FXML
     private void btnClientes(ActionEvent event) {
         try {
-            List<Jogador> itens = servidor.getClientes();
+            List<Jogador> itens = Utils.servidor.getClientes();
             ObservableList data = FXCollections.observableList(itens);
             opcao = CLIENTES;
 
-            visibilidadeContent(true);
+            tvTitle.setVisible(true);
+            tvData.setVisible(true);
+            btnNovo.setVisible(false);
+            btnEdit.setVisible(false);
+            btnDelete.setVisible(false);
             permicaoBotoes(Pergunta.class.getName());
             tvTitle.setText("Jogadores");
             tvData.setItems(data);
@@ -309,13 +311,16 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            servidor = new Servidor(new Runnable() {
+            if (Utils.servidor == null) {
+                Utils.servidor = new Servidor(new Runnable() {
 
-                @Override
-                public void run() {
-                    btnClientes(null);
-                }
-            });
+                    @Override
+                    public void run() {
+                        btnClientes(null);
+                    }
+                });
+            }
+
             visibilidadeContent(false);
             Usuario u = Utils.getUserLogado();
             if (u != null) {
