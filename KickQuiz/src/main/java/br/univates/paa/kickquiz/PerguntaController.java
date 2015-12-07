@@ -136,7 +136,7 @@ public class PerguntaController implements Initializable {
 
             carregarPergunta();
 
-            Button b1 = new Button("Passar");
+            /*Button b1 = new Button("Passar");
             Button b2 = new Button("Dica");
             Button b3 = new Button("Resposta");
 
@@ -152,7 +152,7 @@ public class PerguntaController implements Initializable {
 
             pBonus.add(b1, 1, 0);
             pBonus.add(b2, 2, 0);
-            pBonus.add(b3, 3, 0);
+            pBonus.add(b3, 3, 0);*/
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
