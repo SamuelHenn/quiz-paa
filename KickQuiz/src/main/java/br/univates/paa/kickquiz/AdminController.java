@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -48,7 +50,7 @@ public class AdminController implements Initializable {
     private MenuBar menuBar;
 
     @FXML
-    private Label tvTitle, tvUser;
+    private Label tvTitle, tvUser, tvBonus;
 
     @FXML
     private TableView tvData;
@@ -63,18 +65,19 @@ public class AdminController implements Initializable {
             ObservableList data = FXCollections.observableList(itens);
             opcao = CLIENTES;
 
-            tvTitle.setVisible(true);
-            tvData.setVisible(true);
-            btnNovo.setVisible(true);
             btnNovo.setText("Dar Bonus");
-            btnEdit.setVisible(false);
-            btnDelete.setVisible(false);
             tvTitle.setText("Jogadores");
             tvData.setItems(data);
             TableColumn desc = new TableColumn("Descrição");
             desc.setCellValueFactory(new PropertyValueFactory("descricao"));
             tvData.getColumns().setAll(desc);
             tvData.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+            tvTitle.setVisible(true);
+            tvData.setVisible(true);
+            btnNovo.setVisible(true);
+            btnEdit.setVisible(false);
+            btnDelete.setVisible(false);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -320,6 +323,7 @@ public class AdminController implements Initializable {
                 Utils.servidor = new Servidor(r);
             }
 
+            tvBonus.setVisible(false);
             visibilidadeContent(false);
             Usuario u = Utils.getUserLogado();
             if (u != null) {
@@ -345,7 +349,19 @@ public class AdminController implements Initializable {
                 Utils.servidor.getClientes().get(0).setDescricao(acao[1]);
                 btnClientes(null);
             } else if (acao[0].equals("2")) {
-                tvTitle.setText("O cara usou o bonus!");
+                tvBonus.setVisible(true);
+                Runnable hide = new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(3000);
+                            tvBonus.setVisible(false);
+                        } catch (InterruptedException ex) {
+                        }
+                    }
+                };
+                hide.run();
             }
         }
 

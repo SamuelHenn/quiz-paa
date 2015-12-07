@@ -41,6 +41,7 @@
                 <Button fx:id="btnEdit" layoutX="685.0" layoutY="30.0" mnemonicParsing="false" onAction="#btnEdit" text="Editar" />
                 <Button fx:id="btnDelete" layoutX="628.0" layoutY="30.0" mnemonicParsing="false" onAction="#btnExcluir" text="Excluir" />
                 <Label fx:id="tvUser" layoutX="14.0" layoutY="565.0" text="Olá" />
+                <Label fx:id="tvBonus" layoutX="326.0" layoutY="34.0" text="O usuário usou o bonus!" />
             </children>
         </AnchorPane>
     </children>
