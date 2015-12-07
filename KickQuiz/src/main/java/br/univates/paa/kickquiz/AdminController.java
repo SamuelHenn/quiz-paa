@@ -256,7 +256,7 @@ public class AdminController implements Initializable {
                     alert.setHeaderText("Um bonus foi oferecido ao jogador");
                     alert.setContentText(null);
                     alert.show();
-                    Utils.servidor.enviarMensagem(0, "10", "Bonus");
+                    Utils.servidor.enviarMensagem(Utils.servidor.getClientes().size() - 1, "10", "Bonus");
                     break;
             }
         } catch (Exception e) {
