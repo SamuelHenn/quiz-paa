@@ -65,10 +65,10 @@ public class AdminController implements Initializable {
 
             tvTitle.setVisible(true);
             tvData.setVisible(true);
-            btnNovo.setVisible(false);
+            btnNovo.setVisible(true);
+            btnNovo.setText("Dar Bonus");
             btnEdit.setVisible(false);
             btnDelete.setVisible(false);
-            permicaoBotoes(Pergunta.class.getName());
             tvTitle.setText("Jogadores");
             tvData.setItems(data);
             TableColumn desc = new TableColumn("Descrição");
@@ -250,6 +250,14 @@ public class AdminController implements Initializable {
                 case USUARIO:
                     Utils.abrirTela(getClass(), menuBar, "cadastro_usuario");
                     break;
+                case CLIENTES:
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Dar bonus");
+                    alert.setHeaderText("Um bonus foi oferecido ao jogador");
+                    alert.setContentText(null);
+                    alert.show();
+                    Utils.servidor.enviarMensagem(0, "10", "Bonus");
+                    break;
             }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -354,6 +362,7 @@ public class AdminController implements Initializable {
     }
 
     private void visibilidadeContent(boolean visible) {
+        btnNovo.setText("Novo");
         tvTitle.setVisible(visible);
         tvData.setVisible(visible);
         btnNovo.setVisible(visible);

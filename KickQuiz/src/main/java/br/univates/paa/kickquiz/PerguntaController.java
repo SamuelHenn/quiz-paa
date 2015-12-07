@@ -1,5 +1,6 @@
 package br.univates.paa.kickquiz;
 
+import br.univates.paa.kickquiz.DAO.BonusDAO;
 import br.univates.paa.kickquiz.DAO.PerguntaDAO;
 import br.univates.paa.kickquiz.DAO.TentativaDAO;
 import br.univates.paa.kickquiz.DAO.UsuarioDAO;
@@ -11,6 +12,7 @@ import br.univates.paa.kickquiz.rede.Cliente;
 import br.univates.paa.kickquiz.util.Utils;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -19,6 +21,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.GridPane;
@@ -177,10 +181,48 @@ public class PerguntaController implements Initializable {
 
             tvNome.setText(usuario.getNome());
 
-            cliente = new Cliente("192.168.0.15");
+            RunMenssage r = new RunMenssage();
+            cliente = new Cliente("192.168.0.15", r);
             cliente.enviaMensagem("1", usuario.getNome());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public class RunMenssage implements Runnable {
+
+        private String message = null;
+
+        @Override
+        public void run() {
+            if (message == null) {
+                return;
+            }
+
+            String[] acao = message.split(";");
+            if (acao[0].equals("10")) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Você ganhou um bonus");
+                alert.setHeaderText("Você quer usar esse bonus?");
+                ButtonType btnSim = new ButtonType("Sim");
+                ButtonType btnNao = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
+                alert.getButtonTypes().setAll(btnSim, btnNao);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == btnSim) {
+
+                } else {
+                    alert.close();
+                }
+            }
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
     }
 }

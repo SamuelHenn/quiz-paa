@@ -1,6 +1,7 @@
 package br.univates.paa.kickquiz.rede;
 
 import br.univates.paa.kickquiz.AdminController;
+import br.univates.paa.kickquiz.PerguntaController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,10 +13,12 @@ public class ObterMensagem extends Thread {
     BufferedReader inputSocket = null;
     Socket cliente = null;
     private AdminController.RunMenssage runOnMenssage;
+    private PerguntaController.RunMenssage runOnMenssage2;
 
-    public ObterMensagem(Socket cliente, AdminController.RunMenssage runOnConect) {
+    public ObterMensagem(Socket cliente, AdminController.RunMenssage runOnConect, PerguntaController.RunMenssage runOnMenssage2) {
         this.cliente = cliente;
         this.runOnMenssage = runOnConect;
+        this.runOnMenssage2 = runOnMenssage2;
     }
 
     public void run() {
@@ -31,6 +34,9 @@ public class ObterMensagem extends Thread {
                 if (line != null && line.length() > 0 && runOnMenssage != null) {
                     runOnMenssage.setMessage(line);
                     runOnMenssage.run();
+                } else if (line != null && line.length() > 0 && runOnMenssage2 != null) {
+                    runOnMenssage2.setMessage(line);
+                    runOnMenssage2.run();
                 }
                 line = inputSocket.readLine();
             }

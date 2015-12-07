@@ -57,7 +57,7 @@ public class Servidor {
                     j.setDescricao("Jogador " + (clientes.size() + 1));
                     j.setSocket(socketNovo);
                     System.out.println("Nova conexão");
-                    ObterMensagem obterMensagensCliente = new ObterMensagem(socketNovo, runOnMenssage);
+                    ObterMensagem obterMensagensCliente = new ObterMensagem(socketNovo, runOnMenssage, null);
                     j.setObterMensagem(obterMensagensCliente);
                     j.getObterMensagem().start();
                     EnviarMensagem enviarMensagensCliente = new EnviarMensagem(socketNovo);

@@ -1,5 +1,6 @@
 package br.univates.paa.kickquiz.rede;
 
+import br.univates.paa.kickquiz.PerguntaController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,7 +16,7 @@ public class Cliente {
     private PrintWriter outputSocket = null;
     private BufferedReader bufferReader = null;
 
-    public Cliente(String host) throws IOException {
+    public Cliente(String host, PerguntaController.RunMenssage runOnMenssage) throws IOException {
         InetAddress address = InetAddress.getByName(host);
         String line = null;
         BufferedReader bufferReader = null;
@@ -30,7 +31,7 @@ public class Cliente {
             e.printStackTrace();
             System.err.print("IO Exception");
         }
-        ObterMensagem obterMensagens = new ObterMensagem(this.socket, null);
+        ObterMensagem obterMensagens = new ObterMensagem(this.socket, null, runOnMenssage);
         obterMensagens.start();
         EnviarMensagem enviarMensagens = new EnviarMensagem(this.socket);
         enviarMensagens.start();
