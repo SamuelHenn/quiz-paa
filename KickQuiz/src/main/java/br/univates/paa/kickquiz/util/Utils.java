@@ -57,7 +57,7 @@ public class Utils {
     public static void escreveLog(String titulo, String frase, int nivel) {
         ConfiguracaoDAO confNivelLog = new ConfiguracaoDAO();
         Configuracao nivelLog = confNivelLog.getByChave("nivel_log");
-        if(Integer.parseInt(nivelLog.getValor()) >= nivel){
+        if(Integer.parseInt(nivelLog.getValor()) < nivel){
             System.out.println("Nível inferior ao configurado, não ira gravar este log");
             System.out.println(titulo + " | " + frase);
             return;
