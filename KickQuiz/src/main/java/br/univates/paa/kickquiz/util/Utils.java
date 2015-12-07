@@ -88,7 +88,7 @@ public class Utils {
 
             data = new SimpleDateFormat("HH:mm:ss");
             bw.write("===========================================\r\n");
-            bw.write("[" + data.format(new Date())+ "] - " + titulo + "\r\n");
+            bw.write("(" + data.format(new Date())+ ") - " + titulo + "\r\n");
             bw.write("Mensagem: " + frase + "\r\n");
             bw.flush();
             bw.close();
