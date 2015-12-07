@@ -1,15 +1,19 @@
 package br.univates.paa.kickquiz.rede;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Servidor {
 
     private ArrayList<Jogador> clientes;
     private Runnable runOnConect;
     ServerSocket socketServidor = null;
+    PrintWriter outputSocket = null;
 
     public Servidor(Runnable runOnConect) {
         this.clientes = new ArrayList();
@@ -17,6 +21,21 @@ public class Servidor {
 
         ServerRun sr = new ServerRun();
         sr.start();
+    }
+
+    public void enviarMensagem(int indiceJogador, String tipo, String valor) {
+        Socket socket = this.clientes.get(indiceJogador).getSocket();
+        try {
+            outputSocket = new PrintWriter(socket.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            outputSocket.println("[" + tipo + ";" + valor + "]");
+            outputSocket.flush();
+        } catch (NullPointerException e) {
+            System.out.println("Client Closed");
+        }
     }
 
     public class ServerRun extends Thread {
