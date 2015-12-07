@@ -29,7 +29,7 @@ public class PerguntaController implements Initializable {
     private Pergunta pergunta;
     private Usuario usuario;
     private int num = 0;
-    
+
     public Cliente cliente;
 
     @FXML
@@ -127,9 +127,6 @@ public class PerguntaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            cliente = new Cliente("192.168.0.15");
-            cliente.enviaMensagem("1", usuario.getNome());
-            
             PerguntaDAO pdao = new PerguntaDAO();
             perguntas = pdao.listAll();
 
@@ -167,16 +164,23 @@ public class PerguntaController implements Initializable {
     }
 
     public void setUsuario(String nome) {
-        UsuarioDAO u = new UsuarioDAO();
-        usuario = u.getUsuarioByNome(nome);
+        try {
+            UsuarioDAO u = new UsuarioDAO();
+            usuario = u.getUsuarioByNome(nome);
 
-        if (usuario == null) {
-            usuario = new Usuario();
-            usuario.setNome(nome);
-            UsuarioDAO udao = new UsuarioDAO();
-            udao.save(usuario);
+            if (usuario == null) {
+                usuario = new Usuario();
+                usuario.setNome(nome);
+                UsuarioDAO udao = new UsuarioDAO();
+                udao.save(usuario);
+            }
+
+            tvNome.setText(usuario.getNome());
+
+            cliente = new Cliente("192.168.0.15");
+            cliente.enviaMensagem("1", usuario.getNome());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
-        tvNome.setText(usuario.getNome());
     }
 }
