@@ -17,28 +17,28 @@
                     </font>
                 </Label>
                 
-                <fx:define>
+                <!--<fx:define>
                     <ToggleGroup fx:id="myToggleGroup"/>
                 </fx:define>
                 
                 <RadioButton fx:id="rb1" layoutX="50.0" layoutY="60.0" mnemonicParsing="false" text="Resposta 1" toggleGroup="$myToggleGroup" />
                 <RadioButton fx:id="rb2" layoutX="50.0" layoutY="90.0" mnemonicParsing="false" text="Resposta 2" toggleGroup="$myToggleGroup" />
                 <RadioButton fx:id="rb3" layoutX="50.0" layoutY="120.0" mnemonicParsing="false" text="Resposta 3" toggleGroup="$myToggleGroup" />
-                <RadioButton fx:id="rb4" layoutX="50.0" layoutY="150.0" mnemonicParsing="false" text="Resposta 4" toggleGroup="$myToggleGroup" />
+                <RadioButton fx:id="rb4" layoutX="50.0" layoutY="150.0" mnemonicParsing="false" text="Resposta 4" toggleGroup="$myToggleGroup" />-->
                 <Button layoutX="750.0" layoutY="561.0" mnemonicParsing="false" onAction="#btnSair" text="Sair" />
                 <Label fx:id="tvNome" layoutX="754.0" layoutY="21.0" text="Label" />
                 <Pane layoutX="17.0" layoutY="502.0" prefHeight="81.0" prefWidth="581.0" style="-fx-background-color: #dddddd;">
                     <children>
                         <Label fx:id="tvLabel" layoutX="14.0" layoutY="6.0" text="Você ganhou um bonus, clique ao lado para usar:" />
-                        <GridPane fx:id="pBonus" layoutX="58.0" layoutY="5.0" prefHeight="72.0" prefWidth="518.0" />
+                        <Button fx:id="btnBonus" onAction="#btnBonus" layoutX="291.0" layoutY="11.0" mnemonicParsing="false" text="Bonus" />
                     </children>
                 </Pane>
-            <Button layoutX="528.0" layoutY="454.0" mnemonicParsing="false" text="Próxima" onAction="#btnProxima" >
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-            <Label fx:id="tvNumero" layoutX="569.0" layoutY="21.0" text="" />
+                <Button layoutX="528.0" layoutY="454.0" mnemonicParsing="false" onAction="#btnProxima" text="Próxima">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Label fx:id="tvNumero" layoutX="569.0" layoutY="21.0" text="" />
             </children>
         </AnchorPane>
     </children>

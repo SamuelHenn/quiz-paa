@@ -76,11 +76,7 @@ public class AdminController implements Initializable {
             tvData.getColumns().setAll(desc);
             tvData.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Atenção");
-            alert.setHeaderText(e.getMessage());
-            alert.setContentText(null);
-            alert.show();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -348,6 +344,8 @@ public class AdminController implements Initializable {
             if (acao[0].equals("1")) {
                 Utils.servidor.getClientes().get(0).setDescricao(acao[1]);
                 btnClientes(null);
+            } else if (acao[0].equals("2")) {
+                tvTitle.setText("O cara usou o bonus!");
             }
         }
 

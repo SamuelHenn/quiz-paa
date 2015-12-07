@@ -46,6 +46,9 @@ public class PerguntaController implements Initializable {
     private GridPane pBonus;
 
     @FXML
+    private Button btnBonus;
+
+    @FXML
     private void btnProxima(ActionEvent event) {
         try {
             Resposta r = null;
@@ -137,6 +140,7 @@ public class PerguntaController implements Initializable {
             carregarPergunta();
 
             tvLabel.setVisible(false);
+            btnBonus.setVisible(false);
 
             /*Button b1 = new Button("Passar");
              Button b2 = new Button("Dica");
@@ -191,6 +195,22 @@ public class PerguntaController implements Initializable {
         }
     }
 
+    @FXML
+    private void btnBonus(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Atenção");
+            alert.setHeaderText("Dica: " + pergunta.getDica());
+            alert.setContentText(null);
+            alert.show();
+            tvLabel.setVisible(false);
+            btnBonus.setVisible(false);
+            cliente.enviaMensagem("2", "Ok");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public class RunMenssage implements Runnable {
 
         private String message = null;
@@ -204,19 +224,7 @@ public class PerguntaController implements Initializable {
             String[] acao = message.split(";");
             if (acao[0].equals("10")) {
                 tvLabel.setVisible(true);
-                Button b1 = new Button("Dica");
-                b1.setOnAction(new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent arg0) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Atenção");
-                        alert.setHeaderText("Dica: " + pergunta.getDica());
-                        alert.setContentText(null);
-                        alert.show();
-                        tvLabel.setVisible(false);
-                        //b1.setVisible(false);
-                    }
-                });
-                pBonus.add(b1, 1, 0);
+                btnBonus.setVisible(true);
             }
         }
 
