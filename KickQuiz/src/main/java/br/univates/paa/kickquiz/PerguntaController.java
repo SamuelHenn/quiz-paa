@@ -37,7 +37,7 @@ public class PerguntaController implements Initializable {
     public Cliente cliente;
 
     @FXML
-    private Label tvPergunta, tvNome, tvNumero;
+    private Label tvPergunta, tvNome, tvNumero, tvLabel;
 
     @FXML
     private RadioButton rb1, rb2, rb3, rb4;
@@ -136,23 +136,25 @@ public class PerguntaController implements Initializable {
 
             carregarPergunta();
 
+            tvLabel.setVisible(false);
+
             /*Button b1 = new Button("Passar");
-            Button b2 = new Button("Dica");
-            Button b3 = new Button("Resposta");
+             Button b2 = new Button("Dica");
+             Button b3 = new Button("Resposta");
 
-            b2.setOnAction(new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent arg0) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Atenção");
-                    alert.setHeaderText("Chuta 2");
-                    alert.setContentText(null);
-                    alert.show();
-                }
-            });
+             b2.setOnAction(new EventHandler<ActionEvent>() {
+             public void handle(ActionEvent arg0) {
+             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+             alert.setTitle("Atenção");
+             alert.setHeaderText("Chuta 2");
+             alert.setContentText(null);
+             alert.show();
+             }
+             });
 
-            pBonus.add(b1, 1, 0);
-            pBonus.add(b2, 2, 0);
-            pBonus.add(b3, 3, 0);*/
+             pBonus.add(b1, 1, 0);
+             pBonus.add(b2, 2, 0);
+             pBonus.add(b3, 3, 0);*/
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -201,18 +203,20 @@ public class PerguntaController implements Initializable {
 
             String[] acao = message.split(";");
             if (acao[0].equals("10")) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Você ganhou um bonus");
-                alert.setHeaderText("Você quer usar esse bonus?");
-                ButtonType btnSim = new ButtonType("Sim");
-                ButtonType btnNao = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
-                alert.getButtonTypes().setAll(btnSim, btnNao);
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == btnSim) {
-
-                } else {
-                    alert.close();
-                }
+                tvLabel.setVisible(true);
+                Button b1 = new Button("Dica");
+                b1.setOnAction(new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent arg0) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Atenção");
+                        alert.setHeaderText("Dica: " + pergunta.getDica());
+                        alert.setContentText(null);
+                        alert.show();
+                        tvLabel.setVisible(false);
+                        //b1.setVisible(false);
+                    }
+                });
+                pBonus.add(b1, 1, 0);
             }
         }
 
