@@ -1,6 +1,7 @@
 package br.univates.paa.kickquiz.rede;
 
 import br.univates.paa.kickquiz.PerguntaController;
+import br.univates.paa.kickquiz.util.Utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,58 +29,34 @@ public class Cliente {
             inputSocket = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             outputSocket = new PrintWriter(this.socket.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
-            System.err.print("IO Exception");
+            Utils.escreveLog("[Erro] ao criar cliente", "Erro ao criar o socket para clientes", 1);
+            Utils.escreveLog("[Erro] ao criar cliente - Detalhado", e.getMessage(), 2);
         }
         ObterMensagem obterMensagens = new ObterMensagem(this.socket, null, runOnMenssage);
         obterMensagens.start();
-//        EnviarMensagem enviarMensagens = new EnviarMensagem(this.socket);
-//        enviarMensagens.start();
 
-        System.out.println("Client Address : " + address);
-        System.out.println("Enter Data to echo Server ( Enter QUIT to end):");
-
-//        String response = null;
-//        try {
-//            line = bufferReader.readLine();
-//            while (line.compareTo("QUIT") != 0) {
-//                System.out.println();
-//                outputSocket.println("[cliente fala] - " + line);
-//                outputSocket.flush();
-//                response = inputSocket.readLine();
-//                System.out.println("Mensagem enviada: " + response);
-//                line = bufferReader.readLine();
-//
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            System.out.println("Socket read Error");
-//        } finally {
-//            inputSocket.close();
-//            outputSocket.close();
-//            bufferReader.close();
-//            socket.close();
-//            System.out.println("Connection Closed");
-//        }
+        Utils.escreveLog("[Mensagem] notificação", "Endereço do servidor" + address, 3);
     }
 
     public void enviaMensagem(String tipo, String valor) {
         try {
             outputSocket = new PrintWriter(this.socket.getOutputStream());
         } catch (IOException e) {
-            System.out.println("IO error in server thread");
+            Utils.escreveLog("[Erro] enviar Mensagem", "Erro ao criar output do socket", 1);
+            Utils.escreveLog("[Erro] enviar Mensagem - Detalhado", e.getMessage(), 2);
         }
         try {
             outputSocket.println(tipo + ";" + valor);
             outputSocket.flush();
         } catch (NullPointerException e) {
-            System.out.println("Client " + line + " Closed");
+            Utils.escreveLog("[Erro] enviar Mensagem", "Erro ao enviar a menssagem pelo output do socket", 1);
+            Utils.escreveLog("[Erro] enviar Mensagem - Detalhado", e.getMessage(), 2);
         }
     }
 
     public void fechar() {
         try {
-            System.out.println("Connection Closing..");
+            Utils.escreveLog("[Mensagem] notificação", "Fechando socket", 3);
             if (inputSocket != null) {
                 inputSocket.close();
             }
@@ -90,7 +67,8 @@ public class Cliente {
                 socket.close();
             }
         } catch (IOException ie) {
-            System.out.println("Socket Close Error");
+            Utils.escreveLog("[Erro] fechar socket", "Erro ao fechar a conexao do socket", 1);
+            Utils.escreveLog("[Erro] enviar Mensagem - Detalhado", ie.getMessage(), 2);
         }
     }
 }

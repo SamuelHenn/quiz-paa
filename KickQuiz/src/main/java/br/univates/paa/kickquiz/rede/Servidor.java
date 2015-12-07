@@ -1,6 +1,7 @@
 package br.univates.paa.kickquiz.rede;
 
 import br.univates.paa.kickquiz.AdminController;
+import br.univates.paa.kickquiz.util.Utils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -29,13 +30,15 @@ public class Servidor {
         try {
             outputSocket = new PrintWriter(socket.getOutputStream());
         } catch (IOException ex) {
-            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+            Utils.escreveLog("[Erro] enviar Mensagem", "Erro ao criar output do socket", 1);
+            Utils.escreveLog("[Erro] enviar Mensagem - Detalhado", ex.getMessage(), 2);
         }
         try {
             outputSocket.println(tipo + ";" + valor);
             outputSocket.flush();
         } catch (NullPointerException e) {
-            System.out.println("Client Closed");
+            Utils.escreveLog("[Erro] enviar Mensagem", "Erro ao enviar a menssagem pelo output do socket", 1);
+            Utils.escreveLog("[Erro] enviar Mensagem - Detalhado", e.getMessage(), 2);
         }
     }
 
@@ -43,6 +46,7 @@ public class Servidor {
 
         public void run() {
             System.out.println("Servidor escutando......");
+            Utils.escreveLog("[Mensagem] notificação", "Servidor escutando........", 3);
             try {
                 socketServidor = new ServerSocket(4445);
             } catch (IOException e) {
@@ -56,17 +60,14 @@ public class Servidor {
                     Jogador j = new Jogador();
                     j.setDescricao("Jogador " + (clientes.size() + 1));
                     j.setSocket(socketNovo);
-                    System.out.println("Nova conexão");
+                    Utils.escreveLog("[Mensagem] notificação", "Nova conexao", 3);
                     ObterMensagem obterMensagensCliente = new ObterMensagem(socketNovo, runOnMenssage, null);
                     j.setObterMensagem(obterMensagensCliente);
                     j.getObterMensagem().start();
-//                    EnviarMensagem enviarMensagensCliente = new EnviarMensagem(socketNovo);
-//                    j.setEnviarMensagem(enviarMensagensCliente);
-//                    j.getEnviarMensagem().start();
                     clientes.add(j);
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Connection Error");
+                    Utils.escreveLog("[Erro] ao criar servidor", "Erro ao criar o socket para servidor", 1);
+                    Utils.escreveLog("[Erro] ao criar servidor - Detalhado", e.getMessage(), 2);
                 }
             }
         }
