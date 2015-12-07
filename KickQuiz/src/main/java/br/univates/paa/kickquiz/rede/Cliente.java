@@ -33,8 +33,8 @@ public class Cliente {
         }
         ObterMensagem obterMensagens = new ObterMensagem(this.socket, null, runOnMenssage);
         obterMensagens.start();
-        EnviarMensagem enviarMensagens = new EnviarMensagem(this.socket);
-        enviarMensagens.start();
+//        EnviarMensagem enviarMensagens = new EnviarMensagem(this.socket);
+//        enviarMensagens.start();
 
         System.out.println("Client Address : " + address);
         System.out.println("Enter Data to echo Server ( Enter QUIT to end):");

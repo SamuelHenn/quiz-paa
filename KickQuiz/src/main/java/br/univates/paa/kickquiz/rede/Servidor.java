@@ -60,9 +60,9 @@ public class Servidor {
                     ObterMensagem obterMensagensCliente = new ObterMensagem(socketNovo, runOnMenssage, null);
                     j.setObterMensagem(obterMensagensCliente);
                     j.getObterMensagem().start();
-                    EnviarMensagem enviarMensagensCliente = new EnviarMensagem(socketNovo);
-                    j.setEnviarMensagem(enviarMensagensCliente);
-                    j.getEnviarMensagem().start();
+//                    EnviarMensagem enviarMensagensCliente = new EnviarMensagem(socketNovo);
+//                    j.setEnviarMensagem(enviarMensagensCliente);
+//                    j.getEnviarMensagem().start();
                     clientes.add(j);
                 } catch (Exception e) {
                     e.printStackTrace();
